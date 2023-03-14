@@ -1,4 +1,14 @@
-import { Button, TextField, Grid } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Grid,
+  TableContainer,
+  Table,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@mui/material";
 import React from "react";
 import { ICompareResult } from "../../models/company/company.model";
 
@@ -52,11 +62,29 @@ const Compare = () => {
           />
         </Grid>
       </Grid>
-      {compareResult?.map((el) => (
-        <div>
-          {el.name} - {el.total}
-        </div>
-      ))}
+
+      <Grid container spacing={2} sx={{ mt: 2 }}>
+        {compareResult?.map((el) => (
+          <Grid item xs={6}>
+            <TableContainer>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Total</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>{el.name}</TableCell>
+                    <TableCell>{el.total}</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+        ))}
+      </Grid>
     </>
   );
 };

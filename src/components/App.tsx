@@ -1,13 +1,15 @@
 import React from "react";
 import "../App.css";
+import Header from "./general/header";
 import Compare from "./company/compare";
+import { Container } from "@mui/material";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Jaarrekening vergelijking</h1>
+    <Container maxWidth="sm" className="app text-centered">
+      <Header />
       <Compare />
-    </div>
+    </Container>
   );
 }
 

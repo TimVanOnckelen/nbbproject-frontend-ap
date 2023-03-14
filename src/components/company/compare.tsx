@@ -1,4 +1,4 @@
-import { Button, TextField, Container, Grid } from "@mui/material";
+import { Button, TextField, Grid } from "@mui/material";
 import React from "react";
 import { ICompareResult } from "../../models/company/company.model";
 
@@ -24,7 +24,7 @@ const Compare = () => {
   }, [company1, company2, setCompareResult]);
 
   return (
-    <Container className="container text-centered">
+    <>
       <Grid container spacing={2}>
         <Grid xs={5}>
           <TextField
@@ -57,7 +57,7 @@ const Compare = () => {
           {el.name} - {el.total}
         </div>
       ))}
-    </Container>
+    </>
   );
 };
 

@@ -20,16 +20,16 @@ const Header = () => {
   const onPageChange = React.useCallback(
     (event: React.SyntheticEvent, newValue: string) => {
       setCurrentPage(newValue);
-      navigate("/" + newValue);
+      navigate(newValue);
     },
     [setCurrentPage, navigate]
   );
   return (
     <>
       <BottomNavigation showLabels value={currentPage} onChange={onPageChange}>
-        <BottomNavigationAction label="Vergelijk" value="compare" />
-        <BottomNavigationAction label="Historie" value="history" />
-        <BottomNavigationAction label="Mijn profiel" value="profile" />
+        <BottomNavigationAction label="Vergelijk" value="/compare" />
+        <BottomNavigationAction label="Historie" value="/history" />
+        <BottomNavigationAction label="Mijn profiel" value="/profile" />
       </BottomNavigation>
     </>
   );

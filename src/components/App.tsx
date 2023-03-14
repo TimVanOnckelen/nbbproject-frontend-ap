@@ -2,13 +2,17 @@ import React from "react";
 import "../App.css";
 import Header from "./general/header";
 import Compare from "./company/compare";
-import { Container } from "@mui/material";
+import { Card, CardContent, Container } from "@mui/material";
 
 function App() {
   return (
-    <Container maxWidth="sm" className="app text-centered">
+    <Container maxWidth="xl" className="app text-centered">
       <Header />
-      <Compare />
+      <Card sx={{ mt: 2, pt: 2 }}>
+        <CardContent>
+          <Compare />
+        </CardContent>
+      </Card>
     </Container>
   );
 }

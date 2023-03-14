@@ -1,9 +1,6 @@
 import { Button, TextField, Container, Grid } from "@mui/material";
 import React from "react";
-
-interface ICompareResult {
-  [key: string | number]: any;
-}
+import { ICompareResult } from "../../models/company/company.model";
 
 const Compare = () => {
   const [compareResult, setCompareResult] = React.useState<ICompareResult[]>(

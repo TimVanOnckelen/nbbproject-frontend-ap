@@ -8,6 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Header from "../general/header";
 
 const historyOverview = () => {
   const dummyData: ICompany[] = [
@@ -18,7 +19,7 @@ const historyOverview = () => {
       name: "Company 2",
     },
   ];
-  return  <>
+  return  <> <Header/>
       <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
@@ -39,10 +40,10 @@ const historyOverview = () => {
               <TableCell component="th" scope="row">
                 {name.name}
               </TableCell>
-              <TableCell align="right">{<p> hier komt het ondernemingsnummer vanuit dumbdata dumbdata.ondernemingsnummer</p> }</TableCell> 
+              <TableCell align="right">{<p> hier komt het ondernemingsnummer vanuit dumbdata dumbdata.ondernemingsnummer </p> }</TableCell> 
               <TableCell align="right">{<p> hier komt het winst vanuit dumbdata dumbdata.winst</p>}</TableCell>
               <TableCell align="right">{<p> hier komt het verlies vanuit dumbdata dumbdata.verlies</p>}</TableCell>
-              <TableCell align="right">{<p> hier komt het assets vanuit dumbdata dumbdata.assets</p>}</TableCell>
+              <TableCell align="right">{<p> hier komt het assets vanuit dumbdata dumbdata.winst</p>}</TableCell>
             </TableRow>
           ))}
         </TableBody>

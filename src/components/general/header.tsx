@@ -27,7 +27,7 @@ const Header = () => {
   return (
     <>
       <BottomNavigation showLabels value={currentPage} onChange={onPageChange}>
-        <BottomNavigationAction label="Vergelijk" value="/compare" />
+        <BottomNavigationAction label="Vergelijk" value="/" />
         <BottomNavigationAction label="Historie" value="/history" />
         <BottomNavigationAction label="Mijn profiel" value="/profile" />
       </BottomNavigation>

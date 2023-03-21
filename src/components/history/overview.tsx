@@ -39,18 +39,17 @@ const historyOverview = () => {
               <TableCell component="th" scope="row">
                 {name.name}
               </TableCell>
-              
-              <TableCell align="right">{}</TableCell> 
-               
-              <TableCell align="right">{}</TableCell>
-              <TableCell align="right">{}</TableCell>
-              <TableCell align="right">{}</TableCell>
+              <TableCell align="right">{<p> hier komt het ondernemingsnummer vanuit dumbdata dumbdata.ondernemingsnummer</p> }</TableCell> 
+              <TableCell align="right">{<p> hier komt het winst vanuit dumbdata dumbdata.winst</p>}</TableCell>
+              <TableCell align="right">{<p> hier komt het verlies vanuit dumbdata dumbdata.verlies</p>}</TableCell>
+              <TableCell align="right">{<p> hier komt het assets vanuit dumbdata dumbdata.assets</p>}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
    </>;
+   <p></p>
 };
 
 export default historyOverview;

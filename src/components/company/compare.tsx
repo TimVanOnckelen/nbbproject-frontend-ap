@@ -10,28 +10,44 @@ import {
   TableRow,
 } from "@mui/material";
 import React from "react";
-import { ICompareResult } from "../../models/company/company.model";
+// import { ICompareResult } from "../../models/company/company.model";
+import { BackendApi, FinancialData } from "../../services/api";
 
 const Compare = () => {
-  const [compareResult, setCompareResult] = React.useState<ICompareResult[]>(
-    []
-  );
-  const [company1, setCompany1] = React.useState<string>("");
-  const [company2, setCompany2] = React.useState<string>("");
+  // const [compareResult, setCompareResult] = React.useState<ICompareResult[]>(
+  //   []
+  // );
+  const [company1FinancialData, setCompany1FinancialData] =
+    React.useState<FinancialData>();
+  const [company2FinancialData, setCompany2FinancialData] =
+    React.useState<FinancialData>();
+  const [company1, setCompany1] = React.useState<string>();
+  const [company2, setCompany2] = React.useState<string>();
 
-  const onCompare = React.useCallback(() => {
-    const dummyData: ICompareResult[] = [
-      {
-        total: 100,
-        name: company1,
-      },
-      {
-        total: 200,
-        name: company2,
-      },
-    ];
-    return setCompareResult(dummyData);
-  }, [company1, company2, setCompareResult]);
+  const getCompany = React.useCallback(() => {
+    const loadCompanyData = async () => {
+      try {
+        if (!company1 || !company2) return;
+
+        const response =
+          await BackendApi.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet(
+            "0712657911",
+            2021
+          );
+        setCompany1FinancialData(response.data);
+        const response2 =
+          await BackendApi.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet(
+            "0764896369",
+            2021
+          );
+        setCompany2FinancialData(response2.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    loadCompanyData().then(() => {});
+  }, []);
 
   return (
     <>
@@ -42,13 +58,13 @@ const Compare = () => {
             label="Bedrijf 1"
             variant="outlined"
             value={company1}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setCompany1(event.target.value);
+            onChange={(e) => {
+              setCompany1(e.target.value);
             }}
           />
         </Grid>
         <Grid xs={2}>
-          <Button onClick={onCompare}>Vergelijk</Button>
+          <Button onClick={getCompany}>Vergelijk</Button>
         </Grid>
         <Grid xs={5}>
           <TextField
@@ -56,34 +72,50 @@ const Compare = () => {
             label="Bedrijf 2"
             variant="outlined"
             value={company2}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setCompany2(event.target.value);
+            onChange={(e) => {
+              setCompany2(e.target.value);
             }}
           />
         </Grid>
       </Grid>
 
       <Grid container spacing={2} sx={{ mt: 2 }}>
-        {compareResult?.map((el) => (
-          <Grid item xs={6}>
-            <TableContainer>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Total</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>{el.name}</TableCell>
-                    <TableCell>{el.total}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
-        ))}
+        <Grid item xs={6}>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Profit</TableCell>
+                  <TableCell>Revenue</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell>{company1FinancialData?.profit}</TableCell>
+                  <TableCell>{company1FinancialData?.revenue}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+        <Grid item xs={6}>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Profit</TableCell>
+                  <TableCell>Revenue</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell>{company2FinancialData?.profit}</TableCell>
+                  <TableCell>{company2FinancialData?.revenue}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
       </Grid>
     </>
   );

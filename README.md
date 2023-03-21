@@ -1,46 +1,37 @@
-# Getting Started with Create React App
+## Beschikbare script
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
+Lokaal project uitvoeren:
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+De app is standaard beschikbaar onder http://localhost:3000
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Projecten "bouwen"
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Project "Testen"
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `npm test`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## DEV documentatie
 
-### `npm run eject`
+[Material UI framework](https://mui.com/material-ui/getting-started/overview/)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## API
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Alle modellen zijn te importeren via `/src/api/index.ts`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+De api aanspreken kan door "BackendApi" te importeren vanuit `/src/api/index.ts`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Swagger file van API inladen
 
-## Learn More
+Installeer open API generator lokaal en globaal
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### `npm install @openapitools/openapi-generator-cli -g`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Update de swagger.json file naar de laatste versie van onze eigen backend.
+
+### `openapi-generator-cli generate -g typescript-axios -o ./src/services/api -i swagger.json`
+
+Bovenstaande script generereert automatisch de nodige calls naar de backend api. Deze zijn terug te vinden in src/services/api/api.ts

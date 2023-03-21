@@ -22,7 +22,15 @@ Project "Testen"
 
 Alle modellen zijn te importeren via `/src/api/index.ts`
 
-De api aanspreken kan door "BackendApi" te importeren vanuit `/src/api/index.ts`
+### API aanspreken en gebruiken
+
+De api aanspreken kan door `BackendApi` te importeren vanuit `/src/api/index.ts`
+De api's zijn beschikbaar als parameter binnen het BackendApi object:
+
+- BackendApi.enterprise
+  - BackendApi.enterprise.apiEnterpriseOndernemingsnummerGet(ondernemingsnummer) : Enterprise
+  - BackendApi.enterprise.apiEnterpriseGet() : Enterprise[]
+  - BackendApi.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet(ondernemingsnummer,jaar): FinancialData
 
 ## Swagger file van API inladen
 

@@ -9,6 +9,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Header from "../general/header";
+import App from "../App";
+import { Card, CardContent, Container } from "@mui/material";
 
 const historyOverview = () => {
   const dummyData: ICompany[] = [
@@ -19,8 +21,10 @@ const historyOverview = () => {
       name: "Company 2",
     },
   ];
-  return  <> <Header/>
-      <TableContainer component={Paper}>
+  return (  <Container maxWidth="xl" className="app text-centered"><Header/>
+  <Card sx={{ mt: 2, pt: 2 }}>
+        <CardContent>
+        <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -40,17 +44,21 @@ const historyOverview = () => {
               <TableCell component="th" scope="row">
                 {name.name}
               </TableCell>
-              <TableCell align="right">{<p> hier komt het ondernemingsnummer vanuit dumbdata dumbdata.ondernemingsnummer </p> }</TableCell> 
-              <TableCell align="right">{<p> hier komt het winst vanuit dumbdata dumbdata.winst</p>}</TableCell>
-              <TableCell align="right">{<p> hier komt het verlies vanuit dumbdata dumbdata.verlies</p>}</TableCell>
-              <TableCell align="right">{<p> hier komt het assets vanuit dumbdata dumbdata.winst</p>}</TableCell>
+              
+              <TableCell align="right">{}</TableCell> 
+               
+              <TableCell align="right">{}</TableCell>
+              <TableCell align="right">{}</TableCell>
+              <TableCell align="right">{}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
-   </>;
-   <p></p>
+        </CardContent>
+      </Card>
+      
+    </Container>);
 };
 
 export default historyOverview;

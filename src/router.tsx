@@ -27,7 +27,7 @@ export const router = createBrowserRouter([
   {
     path: "/api-test",
     element: <ApiTester />,
-  },
+  },{
     path:"/history",
     element: <Overview />
   }

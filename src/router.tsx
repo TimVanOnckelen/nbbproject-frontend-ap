@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "./components/App";
 import Search from "./components/search";
 import Login from "./components/auth/login";
+import ApiTester from "./components/general/apiTester";
 
 export const router = createBrowserRouter([
   {
@@ -20,5 +21,9 @@ export const router = createBrowserRouter([
   {
     path: "/search",
     element: <Search />,
+  },
+  {
+    path: "/api-test",
+    element: <ApiTester />,
   },
 ]);

@@ -7,6 +7,10 @@ const axiosInstance = axios.create({
 
 const config = new Configuration();
 
+export interface IBackendAPI {
+    enterprise: EnterpriseApi
+}
+
 export const BackendApi = {
     enterprise: new EnterpriseApi(config, '', axiosInstance)
 }

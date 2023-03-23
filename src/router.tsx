@@ -4,12 +4,14 @@ import Search from "./components/search";
 import Login from "./components/auth/login";
 import ApiTester from "./components/general/apiTester";
 import Overview from "./components/history/overview";
+import Compare from "./components/company/compare";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      { path: "", element: <Compare /> },
       {
         path: "auth",
         children: [

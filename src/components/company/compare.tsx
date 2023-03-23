@@ -11,12 +11,16 @@ import {
 } from "@mui/material";
 import React from "react";
 // import { ICompareResult } from "../../models/company/company.model";
-import { BackendApi, FinancialData } from "../../services/api";
+import { FinancialData } from "../../services/api";
+import { useOutletContext } from "react-router-dom";
+import { IAppContext } from "../../models";
 
 const Compare = () => {
   // const [compareResult, setCompareResult] = React.useState<ICompareResult[]>(
   //   []
   // );
+  const { api } = useOutletContext<IAppContext>();
+
   const [company1FinancialData, setCompany1FinancialData] =
     React.useState<FinancialData>();
   const [company2FinancialData, setCompany2FinancialData] =
@@ -30,13 +34,13 @@ const Compare = () => {
         if (!company1 || !company2) return;
 
         const response =
-          await BackendApi.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet(
+          await api.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet(
             "0712657911",
             2021
           );
         setCompany1FinancialData(response.data);
         const response2 =
-          await BackendApi.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet(
+          await api.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet(
             "0764896369",
             2021
           );
@@ -47,7 +51,7 @@ const Compare = () => {
     };
 
     loadCompanyData().then(() => {});
-  }, []);
+  }, [company1, company2, api]);
 
   return (
     <>

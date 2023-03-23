@@ -24,13 +24,31 @@ Alle modellen zijn te importeren via `/src/api/index.ts`
 
 ### API aanspreken en gebruiken
 
-De api aanspreken kan door `BackendApi` te importeren vanuit `/src/api/index.ts`
-De api's zijn beschikbaar als parameter binnen het BackendApi object:
+De api aanspreken kan door `api` op te halen uit de outlet context
 
-- BackendApi.enterprise
-  - BackendApi.enterprise.apiEnterpriseOndernemingsnummerGet(ondernemingsnummer) : Enterprise
-  - BackendApi.enterprise.apiEnterpriseGet() : Enterprise[]
-  - BackendApi.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet(ondernemingsnummer,jaar): FinancialData
+```
+// Laad de useOutletContext functie
+import { useOutletContext } from "react-router-dom";
+// Haal het model van de appContext op
+import { IAppContext } from "../../models";
+
+const Component = () => {
+  // Haal api object op uit de outlet context.
+const { api } = useOutletContext<IAppContext>();
+
+// bv. api.enterprise is nu beschikbaar.
+// De intelisense geeft suggesties over de beschikbare calls
+
+return (<></>)
+}
+```
+
+De api's zijn beschikbaar als parameter binnen het api object:
+
+- api.enterprise
+  - api.enterprise.apiEnterpriseOndernemingsnummerGet(ondernemingsnummer) : Enterprise
+  - api.enterprise.apiEnterpriseGet() : Enterprise[]
+  - api.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet(ondernemingsnummer,jaar): FinancialData
 
 ## Swagger file van API inladen
 

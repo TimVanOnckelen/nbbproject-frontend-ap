@@ -30,7 +30,7 @@ De api aanspreken kan door `api` op te halen uit de outlet context
 
 Bijvoorbeeld:
 
-```
+```typescript
 // Laad de useOutletContext functie
 import { useOutletContext } from "react-router-dom";
 // Haal het model van de appContext op
@@ -49,7 +49,8 @@ const doApiCall = React.useCallback(() => {
     try {
       const result = api.enterprise.apiEnterpriseGet();
       console.log(result.data);
-      // de data is beschikbaar in
+      // de data is beschikbaar in de parameter data
+      // Modellen zijn automatisch toegekend, dus de intelisense stelt de beschikbare parameters voor.
     }catch(e){
       console.log(e);
     }

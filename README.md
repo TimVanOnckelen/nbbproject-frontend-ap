@@ -17,6 +17,8 @@ Project "Testen"
 ## DEV documentatie
 
 [Material UI framework](https://mui.com/material-ui/getting-started/overview/)
+[React Router](https://reactrouter.com/en/main/routers/create-browser-router)
+[React Router Outlet & context](https://reactrouter.com/en/main/hooks/use-outlet-context)
 
 ## API
 
@@ -25,6 +27,8 @@ Alle modellen zijn te importeren via `/src/api/index.ts`
 ### API aanspreken en gebruiken
 
 De api aanspreken kan door `api` op te halen uit de outlet context
+
+Bijvoorbeeld:
 
 ```
 // Laad de useOutletContext functie
@@ -38,6 +42,19 @@ const { api } = useOutletContext<IAppContext>();
 
 // bv. api.enterprise is nu beschikbaar.
 // De intelisense geeft suggesties over de beschikbare calls
+const doApiCall = React.useCallback(() => {
+  // Gebruik React.useCallback om er voor te zorgen dat de app niet onnodig opnieuw gerenderd wordt
+
+  const callApi = async () => {
+    try {
+      const result = api.enterprise.apiEnterpriseGet();
+      console.log(result.data);
+      // de data is beschikbaar in
+    }catch(e){
+      console.log(e);
+    }
+
+},[]);
 
 return (<></>)
 }
@@ -51,6 +68,9 @@ De api's zijn beschikbaar als parameter binnen het api object:
   - api.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet(ondernemingsnummer,jaar): FinancialData
 
 ## Swagger file van API inladen
+
+Met Open API generator kan de swagger file van de backend automatisch worden omgezet in aanspreekbare calls.
+Hoe deze calls aan te roepen zijn staat hierboven beschreven.
 
 Installeer open API generator lokaal en globaal
 

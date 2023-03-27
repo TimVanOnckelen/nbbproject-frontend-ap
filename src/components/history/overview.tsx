@@ -1,5 +1,6 @@
 import React from "react";
 import { ICompany } from "../../models/company/company.model";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -17,6 +18,7 @@ const historyOverview = () => {
       name: "Company 2",
     },
   ];
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -40,7 +42,6 @@ const historyOverview = () => {
               </TableCell>
 
               <TableCell align="right">{}</TableCell>
-
               <TableCell align="right">{}</TableCell>
               <TableCell align="right">{}</TableCell>
               <TableCell align="right">{}</TableCell>

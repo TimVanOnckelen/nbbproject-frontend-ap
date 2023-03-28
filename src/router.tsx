@@ -3,32 +3,36 @@ import App from "./components/App";
 import Search from "./components/search";
 import Login from "./components/auth/login";
 import ApiTester from "./components/general/apiTester";
-import Overview from "./components/history/overview"
-
+import Overview from "./components/history/overview";
+import Compare from "./components/company/compare";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-  },
-  {
-    path: "/auth",
     children: [
+      { path: "", element: <Compare /> },
       {
-        path: "login",
-        element: <Login />,
+        path: "auth",
+        children: [
+          {
+            path: "login",
+            element: <Login />,
+          },
+        ],
+      },
+      {
+        path: "search",
+        element: <Search />,
+      },
+      {
+        path: "api-test",
+        element: <ApiTester />,
+      },
+      {
+        path: "history",
+        element: <Overview />,
       },
     ],
   },
-  {
-    path: "/search",
-    element: <Search />,
-  },
-  {
-    path: "/api-test",
-    element: <ApiTester />,
-  },{
-    path:"/history",
-    element: <Overview />
-  }
 ]);

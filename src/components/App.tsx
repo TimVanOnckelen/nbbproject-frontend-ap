@@ -16,6 +16,10 @@ import { BackendApi, IBackendAPI } from "../services/api";
 function App() {
   const [api] = React.useState<IBackendAPI>(BackendApi);
 
+  useEffect(() => {
+    document.title = 'NBB vergelijker'
+  })
+
   return (
     <Container maxWidth="xl" className="app text-centered">
       <Header />

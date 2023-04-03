@@ -1,38 +1,33 @@
 import React from 'react';
-import ReactDOM  from 'react-dom/client';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { render, screen } from '@testing-library/react';
+import { RouterProvider, createBrowserRouter, useNavigate } from 'react-router-dom';
+import { render, fireEvent } from '@testing-library/react';
 import Header from '../../general/header';
 
-const empty = () => {
-    return (
-        <>Empty</>
-    );
-}
+jest.mock('react-router-dom', () => ({
+  useNavigate: jest.fn(),
+}));
 
-const emptyRouter = createBrowserRouter([
-    {
-        path:"/",
-        element: <empty />
-    }
-])
+describe('Header component', () => {
 
-test('render Header component',() => {
-    const root = ReactDOM.createRoot(
-        document.getElementById("root") as HTMLElement
-      );
-      // Start van de applicatie
-      // Router laadt de nodige components vanuit router.tsx
-      root.render(
-        <React.StrictMode>
-          <RouterProvider router={emptyRouter} />
-        </React.StrictMode>
-      );
+  test('Verander de pagina wanneer er op een knop geklikt wordt', () => {
+    const navigate = jest.fn();
+    (useNavigate as jest.Mock).mockReturnValue(navigate);
 
+    const { getByText } = render(<Header />);
 
-    render(<Header />);
-    const divHeader = screen.getByRole("header");
-    expect(divHeader).toHaveTextContent("Vergelijk");
-    expect(divHeader).toHaveTextContent("Historie");
-    expect(divHeader).toHaveTextContent("Mijn Profiel");
+    // Controleer Historie
+    let button = getByText('Historie');
+    fireEvent.click(button);
+    expect(navigate).toHaveBeenCalledWith('/history');
+
+    // Controleer Vergelijk
+    button = getByText('Vergelijk');
+    fireEvent.click(button);
+    expect(navigate).toHaveBeenCalledWith('/');
+
+    // Controleer Mijn profiel
+    button = getByText('Mijn profiel');
+    fireEvent.click(button);
+    expect(navigate).toHaveBeenCalledWith('/profile');
+  });
 });

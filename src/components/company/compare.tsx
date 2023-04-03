@@ -19,7 +19,7 @@ const Compare = () => {
   // const [compareResult, setCompareResult] = React.useState<ICompareResult[]>(
   //   []
   // );
-  const { api } = useOutletContext<IAppContext>();
+  const { api } = useOutletContext<IAppContext>()  ?? { api: undefined };
 
   const [company1FinancialData, setCompany1FinancialData] =
     React.useState<FinancialData>();

@@ -1,4 +1,7 @@
+// React
 import { createBrowserRouter } from "react-router-dom";
+
+// Interne onderdelen
 import App from "./components/App";
 import Search from "./components/search";
 import Login from "./components/auth/login";
@@ -6,6 +9,9 @@ import ApiTester from "./components/general/apiTester";
 import Overview from "./components/history/overview";
 import Compare from "./components/company/compare";
 
+// React Router
+// Welke onderdelen moeten ingeladen worden als een gebruiker een bepaald pad kiest.
+// Start bij App component
 export const router = createBrowserRouter([
   {
     path: "/",

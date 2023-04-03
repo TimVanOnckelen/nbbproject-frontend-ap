@@ -1,10 +1,18 @@
-import React from "react";
+// Visuele onderdelen
 import "../App.css";
-import Header from "./general/header";
 import { Container, Card, CardContent } from "@mui/material";
+
+// React
+import React from "react";
 import { Outlet } from "react-router-dom";
+
+// Interne onderdelen
+import Header from "./general/header";
 import { BackendApi, IBackendAPI } from "../services/api";
 
+// Het App onderdeel wordt altijd ingeladen. Daarin zit altijd het Header component.
+// Via het Outlet component wordt dan een ander component ingeladen.
+// Zie router.tsx
 function App() {
   const [api] = React.useState<IBackendAPI>(BackendApi);
 

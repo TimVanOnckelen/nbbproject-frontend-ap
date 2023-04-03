@@ -1,8 +1,12 @@
+// React
 import React from "react";
-import { Enterprise } from "../../services/api";
 import { useOutletContext } from "react-router-dom";
+
+// Interne onderdelen
+import { Enterprise } from "../../services/api";
 import { IAppContext } from "../../models";
 
+// Test de verbinding uit door een bedrijf in te laden vanuit de backend API.
 const ApiTester = () => {
   const [currentEnterprise, setCurrentEnterprise] =
     React.useState<Enterprise>();

@@ -1,3 +1,4 @@
+// Visuele onderdelen
 import {
   Button,
   TextField,
@@ -9,12 +10,18 @@ import {
   TableCell,
   TableRow,
 } from "@mui/material";
+
+// React
 import React from "react";
+import { useOutletContext } from "react-router-dom";
+
+// Interne onderdelen
 // import { ICompareResult } from "../../models/company/company.model";
 import { FinancialData } from "../../services/api";
-import { useOutletContext } from "react-router-dom";
 import { IAppContext } from "../../models";
 
+// Vergelijkt twee bedrijven. Voorlopig worden de twee bedrijven nog fixed meegegeven.
+// Gaat verbinding maken met de backend API om gegevens in te lezen.
 const Compare = () => {
   // const [compareResult, setCompareResult] = React.useState<ICompareResult[]>(
   //   []

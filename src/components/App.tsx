@@ -1,10 +1,10 @@
-// Visuele onderdelen
-import "../App.css";
-import { Container, Card, CardContent } from "@mui/material";
-
 // React
 import React from "react";
 import { Outlet } from "react-router-dom";
+
+// Visuele onderdelen
+import "../App.css";
+import { Container, Card, CardContent } from "@mui/material";
 
 // Interne onderdelen
 import Header from "./general/header";

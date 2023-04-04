@@ -1,3 +1,7 @@
+// React
+import React from "react";
+import { useOutletContext } from "react-router-dom";
+
 // Visuele onderdelen
 import {
   Button,
@@ -10,10 +14,6 @@ import {
   TableCell,
   TableRow,
 } from "@mui/material";
-
-// React
-import React from "react";
-import { useOutletContext } from "react-router-dom";
 
 // Interne onderdelen
 // import { ICompareResult } from "../../models/company/company.model";

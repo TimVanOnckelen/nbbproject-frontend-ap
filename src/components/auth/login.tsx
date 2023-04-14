@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-//  i've put also a loginpage in this but icant be read? 
+//  i've put also a loginpage in this but iT cant be read? 
 
 // const Login = () => {
 //   return <> 
@@ -33,10 +33,10 @@ function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
+       <Link color="inherit" href="https://mui.com/">
+          NBB Company Comparer  
+      </Link>{""} <br />
+       {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
@@ -78,7 +78,7 @@ export default function SignUp() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  autoComplete="given-name"
+                  autoComplete="Name"
                   name="firstName"
                   required
                   fullWidth
@@ -121,7 +121,7 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                  label="I want to receive updates."
                 />
               </Grid>
             </Grid>
@@ -135,7 +135,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="#history" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

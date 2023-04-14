@@ -33,6 +33,10 @@ export const router = createBrowserRouter([
         path: "history",
         element: <Overview />,
       },
+      {
+        path: "profile",
+        element: <Login />,
+      },
     ],
   },
 ]);

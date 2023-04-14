@@ -25,8 +25,10 @@ const Compare = () => {
     React.useState<FinancialData>();
   const [company2FinancialData, setCompany2FinancialData] =
     React.useState<FinancialData>();
-  const [company1, setCompany1] = React.useState<string>();
-  const [company2, setCompany2] = React.useState<string>();
+  const [company1, setCompany1] = 
+    React.useState<string>();
+  const [company2, setCompany2] = 
+    React.useState<string>();
 
   const getCompany = React.useCallback(() => {
     const loadCompanyData = async () => {

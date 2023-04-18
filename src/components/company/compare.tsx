@@ -1,24 +1,14 @@
 // React
-import React from "react";
-import { useOutletContext } from "react-router-dom";
+import React from 'react';
+import { useOutletContext } from 'react-router-dom';
 
 // Visuele onderdelen
-import {
-  Button,
-  TextField,
-  Grid,
-  TableContainer,
-  Table,
-  TableHead,
-  TableBody,
-  TableCell,
-  TableRow,
-} from "@mui/material";
+import { Button, TextField, Grid, TableContainer, Table, TableHead, TableBody, TableCell, TableRow, Alert } from '@mui/material';
 
 // Interne onderdelen
 // import { ICompareResult } from "../../models/company/company.model";
-import { FinancialData } from "../../services/api";
-import { IAppContext } from "../../models";
+import { FinancialData } from '../../services/api';
+import { IAlert, IAppContext } from '../../models';
 
 // Vergelijkt twee bedrijven. Voorlopig worden de twee bedrijven nog fixed meegegeven.
 // Gaat verbinding maken met de backend API om gegevens in te lezen.
@@ -26,36 +16,30 @@ const Compare = () => {
   // const [compareResult, setCompareResult] = React.useState<ICompareResult[]>(
   //   []
   // );
-  const { api } = useOutletContext<IAppContext>()  ?? { api: undefined };
+  const { api } = useOutletContext<IAppContext>() ?? { api: undefined };
 
-  const [company1FinancialData, setCompany1FinancialData] =
-    React.useState<FinancialData>();
-  const [company2FinancialData, setCompany2FinancialData] =
-    React.useState<FinancialData>();
-  const [company1, setCompany1] = 
-    React.useState<string>();
-  const [company2, setCompany2] = 
-    React.useState<string>();
+  const [company1FinancialData, setCompany1FinancialData] = React.useState<FinancialData>();
+  const [company2FinancialData, setCompany2FinancialData] = React.useState<FinancialData>();
+  const [company1, setCompany1] = React.useState<string>();
+  const [company2, setCompany2] = React.useState<string>();
+
+  const [hasError, setHasError] = React.useState<IAlert>({ hasError: false });
 
   const getCompany = React.useCallback(() => {
     const loadCompanyData = async () => {
       try {
-        if (!company1 || !company2) return;
+        setHasError({ hasError: false });
+        if (!company1 || !company2) {
+          setHasError({ hasError: true, message: 'Please enter valid VAT numbers.', type: 'error' });
+          return;
+        }
 
-        const response =
-          await api.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet(
-            "0712657911",
-            2021
-          );
+        const response = await api.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet('0712657911', 2021);
         setCompany1FinancialData(response.data);
-        const response2 =
-          await api.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet(
-            "0764896369",
-            2021
-          );
+        const response2 = await api.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet('0764896369', 2021);
         setCompany2FinancialData(response2.data);
       } catch (e) {
-        console.log(e);
+        setHasError({ hasError: true, message: 'Something ' });
       }
     };
 
@@ -64,12 +48,13 @@ const Compare = () => {
 
   return (
     <>
-      <Grid container spacing={2}>
+      {hasError.hasError && <Alert severity={hasError.type}>{hasError.message}</Alert>}
+      <Grid container>
         <Grid xs={5}>
           <TextField
-            id="company1"
-            label="Bedrijf 1"
-            variant="outlined"
+            id='company1'
+            label='Bedrijf 1'
+            variant='outlined'
             value={company1}
             onChange={(e) => {
               setCompany1(e.target.value);
@@ -81,9 +66,9 @@ const Compare = () => {
         </Grid>
         <Grid xs={5}>
           <TextField
-            id="company2"
-            label="Bedrijf 2"
-            variant="outlined"
+            id='company2'
+            label='Bedrijf 2'
+            variant='outlined'
             value={company2}
             onChange={(e) => {
               setCompany2(e.target.value);
@@ -92,8 +77,15 @@ const Compare = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} sx={{ mt: 2 }}>
-        <Grid item xs={6}>
+      <Grid
+        container
+        spacing={2}
+        sx={{ mt: 2 }}
+      >
+        <Grid
+          item
+          xs={6}
+        >
           <TableContainer>
             <Table>
               <TableHead>
@@ -111,7 +103,10 @@ const Compare = () => {
             </Table>
           </TableContainer>
         </Grid>
-        <Grid item xs={6}>
+        <Grid
+          item
+          xs={6}
+        >
           <TableContainer>
             <Table>
               <TableHead>

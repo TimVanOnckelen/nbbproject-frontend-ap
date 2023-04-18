@@ -1,7 +1,6 @@
 // React
-import React, {useState} from "react";
+import React from "react";
 import { ICompany } from "../../models/company/company.model";
-
 // Visuele onderdelen
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,12 +9,22 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-
-const historyOverview = () => {
+import {useState, useEffect} from "react"
+import { Enterprise } from "../../services/api";
+import { useOutletContext } from "react-router-dom";
+// Haal het model van de appContext op
+import { IAppContext } from "../../models";
+import Compare from "../company/compare";
+const HistoryOverview = () => {
+  
   const dummyData: ICompany[] = [
     {
-      name: "Company 1", 
+      name: "Company 1",  
       vatNumber: 232332322332
+    },
+    {
+      name: "ompany 2",
+      vatNumber: 11221122112
     },
     {
       name: "ompany 2",
@@ -25,6 +34,7 @@ const historyOverview = () => {
       name: "Lompany 2",
       vatNumber: 11221122112
     },
+
 
   ];
 
@@ -70,10 +80,55 @@ const historyOverview = () => {
   // }, [])
 
 
+  //const [filterCompany, SetFilterCompany] =useState("");
+
+//   // Laad de useOutletContext functie
+
+
+// const Component = () => {
+//   // Haal api object op uit de outlet context.
+// const { api } = useOutletContext<IAppContext>();}
+
+// // bv. api.enterprise is nu beschikbaar.
+// // De intelisense geeft suggesties over de beschikbare calls
+// const doApiCall = React.useCallback(() => {});
+//   // Gebruik React.useCallback om er voor te zorgen dat de app niet onnodig opnieuw gerenderd wordt
+
+//   const callApi = async () => {
+//     try {
+//       const result = await api.enterprise.apiEnterpriseGet();
+//       console.log(result.data);
+//       // de data is beschikbaar in de parameter data
+//       // Modellen zijn automatisch toegekend, dus de intelisense stelt de beschikbare parameters voor.
+//     }catch(e){
+//       console.log(e);
+//     }
+
+// },[]);
+
+// return (<>        </>)
+// }
+
+  // const loadHistory =async () => {
+  //   const [history, Sethistory] = useState([]);
+
+  //  let response = await fetch("/src/api/index.ts")
+  //  let historian: ICompany = await response.json();
+  
+  // }
+  // useEffect(()=>{
+  //   loadHistory();
+    
+  // }, [])
+
+
   return (
 
     
+
+    
     <TableContainer component={Paper}>
+      <input type="text" onChange={(e)=> SetFilterCompany(e.target.value)} value={filterCompany}/>
       <input type="text" onChange={(e)=> SetFilterCompany(e.target.value)} value={filterCompany}/>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
@@ -86,7 +141,7 @@ const historyOverview = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {dummyData.filter((c)=> c.name.toUpperCase().startsWith(filterCompany.toUpperCase())).map((name) => (
+          {dummyData.filter((c)=> c.name.toUpperCase().startsWith(filterCompany.toUpperCase())).filter((c)=> c.name.toUpperCase().startsWith(filterCompany.toUpperCase())).map((name) => (
             <TableRow
               key={name.name}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -107,4 +162,4 @@ const historyOverview = () => {
   );
 }
 
-export default historyOverview;
+export default HistoryOverview;

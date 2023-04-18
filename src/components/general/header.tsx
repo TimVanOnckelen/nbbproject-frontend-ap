@@ -1,9 +1,9 @@
 // React
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Visuele onderdelen
-import { BottomNavigation, BottomNavigationAction } from "@mui/material";
+import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 /**
  * https://mui.com/material-ui/api/bottom-navigation-action/
  * More info about button actions can be found above
@@ -12,7 +12,7 @@ import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 // Header component dat boven iedere pagina getoond wordt.
 // Bevat ook het navigatiemenu
 const Header = () => {
-  const [currentPage, setCurrentPage] = React.useState<string>("");
+  const [currentPage, setCurrentPage] = React.useState<string>('');
 
   /**
    * Navigate between routes
@@ -30,11 +30,24 @@ const Header = () => {
     [setCurrentPage, navigate]
   );
   return (
-    <div role="header">
-      <BottomNavigation showLabels value={currentPage} onChange={onPageChange}>
-        <BottomNavigationAction label="Vergelijk" value="/" />
-        <BottomNavigationAction label="Historie" value="/history" />
-        <BottomNavigationAction label="Mijn profiel" value="/profile" />
+    <div>
+      <BottomNavigation
+        showLabels
+        value={currentPage}
+        onChange={onPageChange}
+      >
+        <BottomNavigationAction
+          label='Vergelijk'
+          value='/'
+        />
+        <BottomNavigationAction
+          label='Historie'
+          value='/history'
+        />
+        <BottomNavigationAction
+          label='Mijn profiel'
+          value='/profile'
+        />
       </BottomNavigation>
     </div>
   );

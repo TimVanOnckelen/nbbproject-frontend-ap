@@ -1,5 +1,5 @@
 // React
-import React from "react";
+import React, {useEffect} from "react";
 import { Outlet } from "react-router-dom";
 
 // Visuele onderdelen
@@ -15,6 +15,10 @@ import { BackendApi, IBackendAPI } from "../services/api";
 // Zie router.tsx
 function App() {
   const [api] = React.useState<IBackendAPI>(BackendApi);
+
+  useEffect(() => {
+    document.title = 'NBB vergelijker'
+  })
 
   return (
     <Container maxWidth="xl" className="app text-centered">

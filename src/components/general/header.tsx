@@ -30,13 +30,13 @@ const Header = () => {
     [setCurrentPage, navigate]
   );
   return (
-    <>
+    <div role="header">
       <BottomNavigation showLabels value={currentPage} onChange={onPageChange}>
         <BottomNavigationAction label="Vergelijk" value="/" />
         <BottomNavigationAction label="Historie" value="/history" />
         <BottomNavigationAction label="Mijn profiel" value="/profile" />
       </BottomNavigation>
-    </>
+    </div>
   );
 };
 export default Header;

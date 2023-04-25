@@ -8,29 +8,27 @@ import { Container, Card, CardContent } from "@mui/material";
 
 // Interne onderdelen
 import Header from "./general/header";
-import { BackendApi, IBackendAPI } from "../services/api/initApi";
-
-
+import { BackendApi, IBackendAPI } from "../services/api";
 
 // Het App onderdeel wordt altijd ingeladen. Daarin zit altijd het Header component.
 // Via het Outlet component wordt dan een ander component ingeladen.
 // Zie router.tsx
 function App() {
   const [api] = React.useState<IBackendAPI>(BackendApi);
-  const [token, setToken] = useState<string|undefined>("");
+  const [token, setToken] = useState<string>("NotAnID");
 
   const generateToken = async () => {
-    console.log({userName:"Pablo", password:"QWERTY"});
     let myToken = await api?.token.apiTokenPost({userName:"Pablo", password:"QWERTY"});
-
-    console.log(myToken.data.tokenId);
-    setToken(myToken.data.tokenId?.toString())
+    if(myToken.data.tokenId)
+      setToken(myToken.data.tokenId);
   }
 
   useEffect(() => {
-    document.title = 'NBB vergelijker';
+    document.title = 'NBB compare';
     generateToken();
-    console.log(token);
+    setTimeout(()=> {
+      console.log(token)
+    },3000)
   })
 
   return (
@@ -38,7 +36,7 @@ function App() {
       <Header />
       <Card sx={{ mt: 2, pt: 2 }}>
         <CardContent>
-          <Outlet context={{ api }} />
+          <Outlet context={{ api, token }} />
         </CardContent>
       </Card>
     </Container>

@@ -32,9 +32,9 @@ const Compare = () => {
     React.useState<FinancialData>();
   const [company2FinancialData, setCompany2FinancialData] =
     React.useState<FinancialData>();
-  const [company1, setCompany1] = 
+  const [company1, setCompany1] =
     React.useState<string>();
-  const [company2, setCompany2] = 
+  const [company2, setCompany2] =
     React.useState<string>();
 
   const getCompany = React.useCallback(() => {
@@ -43,17 +43,17 @@ const Compare = () => {
         if (!company1 || !company2) return;
 
         const response =
-          await api.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet(
+          await api?.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet(
             "0712657911",
             2021
           );
-        setCompany1FinancialData(response.data);
+        setCompany1FinancialData(response?.data);
         const response2 =
-          await api.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet(
+          await api?.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet(
             "0764896369",
             2021
           );
-        setCompany2FinancialData(response2.data);
+        setCompany2FinancialData(response2?.data);
       } catch (e) {
         console.log(e);
       }

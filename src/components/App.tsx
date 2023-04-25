@@ -1,5 +1,5 @@
 // React
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { Outlet } from "react-router-dom";
 
 // Visuele onderdelen
@@ -17,9 +17,20 @@ import { BackendApi, IBackendAPI } from "../services/api/initApi";
 // Zie router.tsx
 function App() {
   const [api] = React.useState<IBackendAPI>(BackendApi);
+  const [token, setToken] = useState<string|undefined>("");
+
+  const generateToken = async () => {
+    console.log({userName:"Pablo", password:"QWERTY"});
+    let myToken = await api?.token.apiTokenPost({userName:"Pablo", password:"QWERTY"});
+
+    console.log(myToken.data.tokenId);
+    setToken(myToken.data.tokenId?.toString())
+  }
 
   useEffect(() => {
-    document.title = 'NBB vergelijker'
+    document.title = 'NBB vergelijker';
+    generateToken();
+    console.log(token);
   })
 
   return (

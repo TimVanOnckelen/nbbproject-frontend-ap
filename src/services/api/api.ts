@@ -285,6 +285,19 @@ export interface ProblemDetails {
 /**
  * 
  * @export
+ * @interface Token
+ */
+export interface Token {
+    /**
+     * 
+     * @type {string}
+     * @memberof Token
+     */
+    'tokenId'?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface UserLogin
  */
 export interface UserLogin {
@@ -584,7 +597,7 @@ export const TokenApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiTokenPost(userLogin?: UserLogin, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async apiTokenPost(userLogin?: UserLogin, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Token>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiTokenPost(userLogin, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -604,7 +617,7 @@ export const TokenApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiTokenPost(userLogin?: UserLogin, options?: any): AxiosPromise<void> {
+        apiTokenPost(userLogin?: UserLogin, options?: any): AxiosPromise<Token> {
             return localVarFp.apiTokenPost(userLogin, options).then((request) => request(axios, basePath));
         },
     };

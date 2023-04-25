@@ -17,8 +17,8 @@ const ApiTester = () => {
     const loadData = async () => {
       try {
         const response =
-          await api.enterprise.apiEnterpriseOndernemingsnummerGet("0712657911");
-        setCurrentEnterprise(response.data);
+          await api?.enterprise.apiEnterpriseOndernemingsnummerGet("0712657911");
+        setCurrentEnterprise(response?.data);
       } catch (e) {
         console.log(e);
       }

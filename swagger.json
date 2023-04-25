@@ -258,6 +258,37 @@
           }
         }
       }
+    },
+    "/api/Token": {
+      "post": {
+        "tags": [
+          "Token"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -295,6 +326,33 @@
       "Enterprise": {
         "type": "object",
         "properties": {
+          "referenceNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "depositDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseDates": {
+            "$ref": "#/components/schemas/ExerciseDates"
+          },
+          "modelType": {
+            "type": "string",
+            "nullable": true
+          },
+          "depositType": {
+            "type": "string",
+            "nullable": true
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          },
           "enterpriseNumber": {
             "type": "string",
             "nullable": true
@@ -306,7 +364,38 @@
           "address": {
             "$ref": "#/components/schemas/Address"
           },
+          "legalForm": {
+            "type": "string",
+            "nullable": true
+          },
+          "legalSituation": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullFillLegalValidation": {
+            "type": "boolean"
+          },
+          "activityCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "generalAssemblyDate": {
+            "type": "string",
+            "nullable": true
+          },
           "accountingDataURL": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataVersion": {
+            "type": "string",
+            "nullable": true
+          },
+          "improvementDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "correctedData": {
             "type": "string",
             "nullable": true
           },
@@ -315,6 +404,20 @@
             "items": {
               "$ref": "#/components/schemas/FinancialData"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExerciseDates": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -368,6 +471,20 @@
           }
         },
         "additionalProperties": { }
+      },
+      "UserLogin": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       }
     }
   }

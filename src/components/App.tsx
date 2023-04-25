@@ -8,7 +8,9 @@ import { Container, Card, CardContent } from "@mui/material";
 
 // Interne onderdelen
 import Header from "./general/header";
-import { BackendApi, IBackendAPI } from "../services/api";
+import { BackendApi, IBackendAPI } from "../services/api/initApi";
+
+
 
 // Het App onderdeel wordt altijd ingeladen. Daarin zit altijd het Header component.
 // Via het Outlet component wordt dan een ander component ingeladen.

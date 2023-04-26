@@ -1,160 +1,55 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-//  i've put also a loginpage in this but iT cant be read? 
+import { useState } from "react"
 
-// const Login = () => {
-//   return <> 
+// Bekijk ooķ zeker https://github.com/winderickxeli/portfolio/blob/main/src/Functional/Portfolio.tsx
+// Daar gebruik ik useNavigate en NavLink om een Outlet in een Outlet op te vullen.
+// Zo kan je ook volledige componenten inladen.
 
-// <div>Login Pagina</div> 
-  
-//   <form action="" method="get">
-//     <label form="email">e-mail:</label>
-//     <input type="email" name="email" placeholder="email"/>
-//     <label form="password "> Password </label>
-//     <input type="password" name = "password" placeholder="password"/>
-//   </form>
-  
-//   </>;
-// };
+// Het voorbeeld hieronder gebruikt een Boolean om twee componenten te wisselen
+// Deze worden bewaart in een useState.
 
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-       <Link color="inherit" href="https://mui.com/">
-          NBB Company Comparer  
-      </Link>{""} <br />
-       {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
+// Deze interface hebben we nodig om de componenten goed op te vullen.
+interface ShowProps {
+  SignBool:Boolean
+  setSignBool: (SignBool: boolean) => void
 }
 
-const theme = createTheme();
+// Dit is een functie om de Boolean te wisselen
+const SwitchBool = ({SignBool, setSignBool}: ShowProps) => {
+  if(SignBool)
+    setSignBool(false)
+  else
+    setSignBool(true)
+}
 
-export default function SignUp() {
+// Component 1
+const Show1 = ({SignBool, setSignBool}: ShowProps) => {
 
- 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+  return(
+    <>
+      <button onClick={() => {SwitchBool({SignBool, setSignBool})}}>Click Here</button>
+    </>
+  )
+}
 
-  return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="Name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive updates."
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#history" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
-    </ThemeProvider>
+// Component 2
+const Show2 = ({SignBool, setSignBool}: ShowProps) => {
 
-    
-  );
+  return(
+    <>
+      <button onClick={() => {SwitchBool({SignBool, setSignBool})}}>No... Here!</button>
+    </>
+  )
 }
 
 
+const Login = () => {
+  const [SignBool, setSignBool] = useState<boolean>(true);
 
+  // Als SignBool true is, tonen we Show1, Anders Show2
+  if(SignBool){
+    return <Show1 SignBool={SignBool} setSignBool={setSignBool} />
+  }
+  return <Show2 SignBool={SignBool} setSignBool={setSignBool} />
+}
 
-
-
-export{}
-
-
+export default Login

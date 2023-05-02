@@ -1,160 +1,106 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-//  i've put also a loginpage in this but iT cant be read? 
+import { useNavigate, useOutletContext } from 'react-router-dom';
+import { IAppContext } from '../../models';
+import { Button, TextField, Grid, Box, Alert } from '@mui/material';
 
-// const Login = () => {
-//   return <> 
+export const Login = () => {
+  const { setToken, api } = useOutletContext<IAppContext>();
+  const [username, setUser] = React.useState<string>();
+  const [password, setPassword] = React.useState<string>();
+  const [hasError, setHasError] = React.useState<boolean>(false);
 
-// <div>Login Pagina</div> 
-  
-//   <form action="" method="get">
-//     <label form="email">e-mail:</label>
-//     <input type="email" name="email" placeholder="email"/>
-//     <label form="password "> Password </label>
-//     <input type="password" name = "password" placeholder="password"/>
-//   </form>
-  
-//   </>;
-// };
-
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-       <Link color="inherit" href="https://mui.com/">
-          NBB Company Comparer  
-      </Link>{""} <br />
-       {new Date().getFullYear()}
-      {'.'}
-    </Typography>
+  const changePassword = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setPassword(e.currentTarget.value);
+    },
+    [setPassword]
   );
-}
+  const changeUser = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setUser(e.currentTarget.value);
+    },
+    [setUser]
+  );
 
-const theme = createTheme();
+  const navigate = useNavigate();
 
-export default function SignUp() {
-
- 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+  const handleLogin = React.useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      const doLogin = async () => {
+        e.preventDefault();
+        setHasError(false);
+        try {
+          const response = await api.auth.apiAuthenticationPost({ userName: username, password: password });
+          if (response.status === 200 && response.data.tokenId) {
+            setToken(response.data?.tokenId);
+            navigate('/history');
+          } else {
+            setHasError(true);
+          }
+        } catch (e) {
+          setHasError(true);
+          console.log(e);
+        }
+      };
+      doLogin().catch((e) => console.log(e));
+    },
+    [api, password, username, setToken, navigate, setHasError]
+  );
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
+    <>
+      <Box
+        sx={{
+          marginTop: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        {hasError && <Alert severity='error'>Username and password do not match. Please try again.</Alert>}
+        <h2>Login</h2>
+
+        <Grid
+          container
           sx={{
-            marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+          <form onSubmit={handleLogin}>
+            <Grid>
+              <>
                 <TextField
-                  autoComplete="Name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
+                  type='text'
+                  name='username'
+                  label='Username'
+                  placeholder='username'
+                  onChange={changeUser}
+                  sx={{ m: 1 }}
                 />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive updates."
-                />
-              </Grid>
+              </>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#history" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
+            <Grid>
+              <>
+                <TextField
+                  type='password'
+                  name='password'
+                  label='Password'
+                  placeholder='password'
+                  onChange={changePassword}
+                />
+              </>
             </Grid>
-          </Box>
-        </Box>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
-    </ThemeProvider>
-
-    
+            <Grid>
+              {' '}
+              <Button type='submit'>Login</Button>
+            </Grid>
+          </form>
+        </Grid>
+      </Box>
+    </>
   );
-}
+};
 
-
-
-
-
-
-export{}
-
-
+export default Login;

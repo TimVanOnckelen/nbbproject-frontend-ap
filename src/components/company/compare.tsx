@@ -10,7 +10,7 @@ import Company from './company';
 // Interne onderdelen
 // import { ICompareResult } from "../../models/company/company.model";
 import { Enterprise } from '../../services/api';
-import { IAlert, IAppContext } from '../../models';
+import { IAlert, IAppContext, IHighestData } from '../../models';
 
 // Vergelijkt twee bedrijven. Voorlopig worden de twee bedrijven nog fixed meegegeven.
 // Gaat verbinding maken met de backend API om gegevens in te lezen.
@@ -21,6 +21,7 @@ const Compare = () => {
   const [company1, setCompany1] = React.useState<string>();
   const [company2, setCompany2] = React.useState<string>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [highestData, setHighestData] = React.useState<IHighestData>({});
 
   const [hasError, setHasError] = React.useState<IAlert>({ hasError: false });
 
@@ -60,6 +61,27 @@ const Compare = () => {
 
     loadCompanyData().then(() => {});
   }, [company1, company2, api, callConfig]);
+
+  React.useEffect(() => {
+    if (companysFinancialData.length === 0) return;
+    const maxProfitEnterprise = companysFinancialData.reduce((prev, current) => {
+      if (prev.financialData?.profit && current.financialData?.profit) {
+        return prev.financialData?.profit > current.financialData?.profit ? prev : current;
+      }
+      return current;
+    });
+    const maxRevenueEnterprise = companysFinancialData.reduce((prev, current) => {
+      if (prev.financialData?.revenue && current.financialData?.revenue) {
+        return prev.financialData?.revenue > current.financialData?.revenue ? prev : current;
+      }
+      return current;
+    });
+
+    setHighestData({
+      profit: maxProfitEnterprise.financialData?.profit,
+      revenue: maxRevenueEnterprise.financialData?.revenue,
+    });
+  }, [companysFinancialData]);
 
   return (
     <>
@@ -102,7 +124,10 @@ const Compare = () => {
               item
               xs={6}
             >
-              <Company company={currentCompany} />
+              <Company
+                company={currentCompany}
+                highestData={highestData}
+              />
             </Grid>
           ))}
       </Grid>

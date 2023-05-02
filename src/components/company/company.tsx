@@ -1,11 +1,56 @@
 import * as React from 'react';
 import { Enterprise } from '../../services/api';
-import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Box, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { IHighestData } from '../../models';
 interface ICompanyProps {
   company: Enterprise;
+  highestData?: IHighestData;
+}
+
+enum highLowType {
+  profit,
+  revenue,
 }
 const Company = (props: ICompanyProps) => {
-  const { company } = props;
+  const { company, highestData = { profit: 0, revenue: 0 } } = props;
+
+  const checkHighLow = React.useCallback(
+    (amount: number = 0, type: highLowType) => {
+      if (type === highLowType.profit && highestData.profit) {
+        if (highestData.profit <= amount) {
+          return (
+            <Chip
+              color='success'
+              label={company.financialData?.profit}
+            />
+          );
+        }
+        return (
+          <Chip
+            color='error'
+            label={company.financialData?.profit}
+          />
+        );
+      }
+      if (type === highLowType.revenue && highestData.revenue) {
+        if (highestData.revenue <= amount) {
+          return (
+            <Chip
+              color='success'
+              label={company.financialData?.revenue}
+            />
+          );
+        }
+        return (
+          <Chip
+            color='error'
+            label={company.financialData?.revenue}
+          />
+        );
+      }
+    },
+    [highestData, company]
+  );
   return (
     <>
       <Box>
@@ -26,9 +71,9 @@ const Company = (props: ICompanyProps) => {
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell> {company.financialData?.year}</TableCell>
-              <TableCell> {company.financialData?.profit}</TableCell>
-              <TableCell> {company.financialData?.revenue}</TableCell>
+              <TableCell>{company.financialData?.year}</TableCell>
+              <TableCell>{checkHighLow(company.financialData?.profit, highLowType.profit)}</TableCell>
+              <TableCell> {checkHighLow(company.financialData?.revenue, highLowType.revenue)}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

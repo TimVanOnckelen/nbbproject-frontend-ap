@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Navigate, Outlet, useOutletContext } from 'react-router-dom';
 import { IAppContext } from '../../models';
 

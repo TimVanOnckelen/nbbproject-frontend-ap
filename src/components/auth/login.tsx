@@ -4,7 +4,7 @@ import { IAppContext } from '../../models';
 import { Button, TextField, Grid, Box, Alert } from '@mui/material';
 
 export const Login = () => {
-  const { setToken, api, token } = useOutletContext<IAppContext>();
+  const { setToken, api } = useOutletContext<IAppContext>();
   const [username, setUser] = React.useState<string>();
   const [password, setPassword] = React.useState<string>();
   const [hasError, setHasError] = React.useState<boolean>(false);
@@ -33,7 +33,7 @@ export const Login = () => {
           const response = await api.auth.apiAuthenticationPost({ userName: username, password: password });
           if (response.status === 200 && response.data.tokenId) {
             setToken(response.data?.tokenId);
-            navigate('/', { replace: true });
+            navigate('/history');
           } else {
             setHasError(true);
           }
@@ -51,7 +51,7 @@ export const Login = () => {
     <>
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 2,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',

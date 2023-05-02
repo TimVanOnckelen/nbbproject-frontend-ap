@@ -5,8 +5,8 @@ import { Button, TextField, Grid, Box, Alert } from '@mui/material';
 
 export const Login = () => {
   const { setToken, api } = useOutletContext<IAppContext>();
-  const [username, setUser] = React.useState<string>();
-  const [password, setPassword] = React.useState<string>();
+  const [username, setUser] = React.useState<string>('');
+  const [password, setPassword] = React.useState<string>('');
   const [hasError, setHasError] = React.useState<boolean>(false);
 
   const changePassword = React.useCallback(

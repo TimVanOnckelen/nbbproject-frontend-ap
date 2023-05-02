@@ -10,7 +10,7 @@ import { BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
  */
 
 interface IHeaderProps {
-  token?: string;
+  token?: string | null;
 }
 
 // Header component dat boven iedere pagina getoond wordt.

@@ -3,17 +3,21 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Visuele onderdelen
-import { BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
 /**
  * https://mui.com/material-ui/api/bottom-navigation-action/
  * More info about button actions can be found above
  */
 
+interface IHeaderProps {
+  token?: string;
+}
+
 // Header component dat boven iedere pagina getoond wordt.
 // Bevat ook het navigatiemenu
-const Header = () => {
+const Header = (props: IHeaderProps) => {
   const [currentPage, setCurrentPage] = React.useState<string>('');
-
+  const { token } = props;
   /**
    * Navigate between routes
    */
@@ -31,23 +35,44 @@ const Header = () => {
   );
   return (
     <div>
+      <Box>
+        <h1 className='MuiTypography-h1'>National bank comparator</h1>
+      </Box>
       <BottomNavigation
         showLabels
         value={currentPage}
         onChange={onPageChange}
       >
-        <BottomNavigationAction
-          label='Vergelijk'
-          value='/'
-        />
-        <BottomNavigationAction
-          label='Historie'
-          value='/history'
-        />
-        <BottomNavigationAction
-          label='Mijn profiel'
-          value='/profile'
-        />
+        {token && (
+          <BottomNavigationAction
+            label='Compare'
+            value='/'
+          />
+        )}
+        {token && (
+          <BottomNavigationAction
+            label='History'
+            value='/history'
+          />
+        )}
+        {token && (
+          <BottomNavigationAction
+            label='My Profile'
+            value='/profile'
+          />
+        )}
+        {token && (
+          <BottomNavigationAction
+            label='Log out'
+            value='auth/logout'
+          />
+        )}
+        {!token && (
+          <BottomNavigationAction
+            label='Login'
+            value='/auth/login'
+          />
+        )}
       </BottomNavigation>
     </div>
   );

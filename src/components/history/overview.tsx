@@ -9,12 +9,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useState, useEffect } from 'react';
-// import { Enterprise } from "../../services/api";
-// import { useOutletContext } from "react-router-dom";
-// // Haal het model van de appContext op
-// import { IAppContext } from "../../models";
-// import Compare from "../company/compare";
+import { useState } from 'react';
+
 const HistoryOverview = () => {
   const dummyData: ICompany[] = [
     {
@@ -117,16 +113,6 @@ const HistoryOverview = () => {
 
   return (
     <TableContainer component={Paper}>
-      <input
-        type='text'
-        onChange={(e) => SetFilterCompany(e.target.value)}
-        value={filterCompany}
-      />
-      <input
-        type='text'
-        onChange={(e) => SetFilterCompany(e.target.value)}
-        value={filterCompany}
-      />
       <Table
         sx={{ minWidth: 650 }}
         aria-label='simple table'

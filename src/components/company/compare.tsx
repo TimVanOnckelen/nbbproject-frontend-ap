@@ -7,7 +7,7 @@ import { Button, TextField, Grid, TableContainer, Table, TableHead, TableBody, T
 
 // Interne onderdelen
 // import { ICompareResult } from "../../models/company/company.model";
-import { FinancialData } from '../../services/api';
+import { Enterprise, FinancialData } from '../../services/api';
 import { IAlert, IAppContext } from '../../models';
 
 // Vergelijkt twee bedrijven. Voorlopig worden de twee bedrijven nog fixed meegegeven.
@@ -18,8 +18,8 @@ const Compare = () => {
   // );
   const { api } = useOutletContext<IAppContext>() ?? { api: undefined };
 
-  const [company1FinancialData, setCompany1FinancialData] = React.useState<FinancialData>();
-  const [company2FinancialData, setCompany2FinancialData] = React.useState<FinancialData>();
+  const [company1FinancialData, setCompany1FinancialData] = React.useState<Enterprise>();
+  const [company2FinancialData, setCompany2FinancialData] = React.useState<Enterprise>();
   const [company1, setCompany1] = React.useState<string>();
   const [company2, setCompany2] = React.useState<string>();
 
@@ -34,9 +34,9 @@ const Compare = () => {
           return;
         }
 
-        const response = await api.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet('0712657911', 2021);
+        const response = await api.enterprise.apiEnterpriseOndernemingsnummerGet('0712657911');
         setCompany1FinancialData(response.data);
-        const response2 = await api.enterprise.apiEnterpriseOndernemingsnummerFinancialYearGet('0764896369', 2021);
+        const response2 = await api.enterprise.apiEnterpriseOndernemingsnummerGet('0764896369');
         setCompany2FinancialData(response2.data);
       } catch (e) {
         setHasError({ hasError: true, message: 'Something ' });
@@ -96,8 +96,7 @@ const Compare = () => {
               </TableHead>
               <TableBody>
                 <TableRow>
-                  <TableCell>{company1FinancialData?.profit}</TableCell>
-                  <TableCell>{company1FinancialData?.revenue}</TableCell>
+                  <TableCell>{company1FinancialData?.enterpriseName}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
@@ -117,8 +116,7 @@ const Compare = () => {
               </TableHead>
               <TableBody>
                 <TableRow>
-                  <TableCell>{company2FinancialData?.profit}</TableCell>
-                  <TableCell>{company2FinancialData?.revenue}</TableCell>
+                  <TableCell>{company2FinancialData?.enterpriseName}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>

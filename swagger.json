@@ -5,6 +5,97 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/Authentication": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Token"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Token"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Token"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
     "/api/Enterprise": {
       "get": {
         "tags": [
@@ -86,14 +177,14 @@
         }
       }
     },
-    "/api/Enterprise/{ondernemingsnummer}": {
+    "/api/Enterprise/{id}": {
       "get": {
         "tags": [
           "Enterprise"
         ],
         "parameters": [
           {
-            "name": "ondernemingsnummer",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
@@ -118,97 +209,6 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Enterprise"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/Enterprise/{ondernemingsnummer}/{financialYear}": {
-      "get": {
-        "tags": [
-          "Enterprise"
-        ],
-        "parameters": [
-          {
-            "name": "ondernemingsnummer",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "financialYear",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FinancialData"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FinancialData"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FinancialData"
                 }
               }
             }
@@ -265,6 +265,10 @@
       "Address": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "box": {
             "type": "string",
             "nullable": true
@@ -295,6 +299,38 @@
       "Enterprise": {
         "type": "object",
         "properties": {
+          "referenceNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "depositDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "modelType": {
+            "type": "string",
+            "nullable": true
+          },
+          "depositType": {
+            "type": "string",
+            "nullable": true
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          },
           "enterpriseNumber": {
             "type": "string",
             "nullable": true
@@ -306,16 +342,43 @@
           "address": {
             "$ref": "#/components/schemas/Address"
           },
+          "legalForm": {
+            "type": "string",
+            "nullable": true
+          },
+          "legalSituation": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullFillLegalValidation": {
+            "type": "boolean"
+          },
+          "activityCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "generalAssemblyDate": {
+            "type": "string",
+            "nullable": true
+          },
           "accountingDataURL": {
             "type": "string",
             "nullable": true
           },
-          "financialDataArray": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FinancialData"
-            },
+          "dataVersion": {
+            "type": "string",
             "nullable": true
+          },
+          "improvementDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "correctedData": {
+            "type": "string",
+            "nullable": true
+          },
+          "financialData": {
+            "$ref": "#/components/schemas/FinancialData"
           }
         },
         "additionalProperties": false
@@ -368,6 +431,34 @@
           }
         },
         "additionalProperties": { }
+      },
+      "Token": {
+        "type": "object",
+        "properties": {
+          "tokenId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserLogin": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       }
     }
   }

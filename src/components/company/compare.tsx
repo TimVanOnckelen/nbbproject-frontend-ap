@@ -3,23 +3,25 @@ import React from 'react';
 import { useOutletContext } from 'react-router-dom';
 
 // Visuele onderdelen
-import { Button, TextField, Grid, TableContainer, Table, TableHead, TableBody, TableCell, TableRow, Alert, Box, Skeleton } from '@mui/material';
+import { Button, TextField, Grid, Alert, Box, CircularProgress } from '@mui/material';
+
+import Company from './company';
 
 // Interne onderdelen
 // import { ICompareResult } from "../../models/company/company.model";
 import { Enterprise } from '../../services/api';
-import { IAlert, IAppContext } from '../../models';
+import { IAlert, IAppContext, IHighestData } from '../../models';
 
 // Vergelijkt twee bedrijven. Voorlopig worden de twee bedrijven nog fixed meegegeven.
 // Gaat verbinding maken met de backend API om gegevens in te lezen.
 const Compare = () => {
   const { api, callConfig } = useOutletContext<IAppContext>() ?? { api: undefined };
 
-  const [company1FinancialData, setCompany1FinancialData] = React.useState<Enterprise>();
-  const [company2FinancialData, setCompany2FinancialData] = React.useState<Enterprise>();
+  const [companysFinancialData, setCompanysFinancialData] = React.useState<Enterprise[]>([]);
   const [company1, setCompany1] = React.useState<string>();
   const [company2, setCompany2] = React.useState<string>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [highestData, setHighestData] = React.useState<IHighestData>({});
 
   const [hasError, setHasError] = React.useState<IAlert>({ hasError: false });
 
@@ -39,18 +41,19 @@ const Compare = () => {
     const loadCompanyData = async () => {
       try {
         setHasError({ hasError: false });
+        setCompanysFinancialData([]);
         setIsLoading(true);
         if (!company1 || !company2) {
           setHasError({ hasError: true, message: 'Please enter valid VAT numbers.', type: 'error' });
           return;
         }
-        const response = await api.enterprise.apiEnterpriseOndernemingsnummerGet(company1, callConfig);
-        setCompany1FinancialData(response.data);
-        const response2 = await api.enterprise.apiEnterpriseOndernemingsnummerGet(company2, callConfig);
-        setCompany2FinancialData(response2.data);
+        const response = await api.enterprise.apiEnterprisePost({ enterpriseNumbers: [company1, company2] }, callConfig);
+        if (response.status === 200 && response.data.length > 1) {
+          setCompanysFinancialData(response.data as Enterprise[]);
+        }
       } catch (e) {
         console.log(e);
-        setHasError({ hasError: true, message: 'Seems like one of the companys does not exsist in the database. Please try again.' });
+        setHasError({ hasError: true, message: 'Seems like one or both of the companys does not exsist in the database. Please try again.' });
       } finally {
         setIsLoading(false);
       }
@@ -58,6 +61,27 @@ const Compare = () => {
 
     loadCompanyData().then(() => {});
   }, [company1, company2, api, callConfig]);
+
+  React.useEffect(() => {
+    if (companysFinancialData.length === 0) return;
+    const maxProfitEnterprise = companysFinancialData.reduce((prev, current) => {
+      if (prev.financialData?.profit && current.financialData?.profit) {
+        return prev.financialData?.profit > current.financialData?.profit ? prev : current;
+      }
+      return current;
+    });
+    const maxRevenueEnterprise = companysFinancialData.reduce((prev, current) => {
+      if (prev.financialData?.revenue && current.financialData?.revenue) {
+        return prev.financialData?.revenue > current.financialData?.revenue ? prev : current;
+      }
+      return current;
+    });
+
+    setHighestData({
+      profit: maxProfitEnterprise.financialData?.profit,
+      revenue: maxRevenueEnterprise.financialData?.revenue,
+    });
+  }, [companysFinancialData]);
 
   return (
     <>
@@ -88,78 +112,25 @@ const Compare = () => {
           />
         </Grid>
       </Grid>
-      {isLoading && (
-        <>
-          <Skeleton
-            variant='rectangular'
-            width={210}
-            height={10}
-          />
-          <Skeleton
-            variant='rectangular'
-            width={230}
-            height={10}
-          />
-          <Skeleton
-            variant='rectangular'
-            width={250}
-            height={10}
-          />
-          <Skeleton
-            variant='rectangular'
-            width={260}
-            height={10}
-          />
-        </>
-      )}
-      {company1FinancialData && company2FinancialData && (
-        <Grid
-          container
-          spacing={2}
-          sx={{ mt: 2 }}
-        >
-          <Grid
-            item
-            xs={6}
-          >
-            <TableContainer>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Profit</TableCell>
-                    <TableCell>Revenue</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>{company1FinancialData?.enterpriseName}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
-          <Grid
-            item
-            xs={6}
-          >
-            <TableContainer>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Profit</TableCell>
-                    <TableCell>Revenue</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>{company2FinancialData?.enterpriseName}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
-        </Grid>
-      )}
+      <Grid
+        container
+        spacing={2}
+        sx={{ mt: 2 }}
+      >
+        {isLoading && <CircularProgress />}
+        {companysFinancialData &&
+          companysFinancialData.map((currentCompany) => (
+            <Grid
+              item
+              xs={6}
+            >
+              <Company
+                company={currentCompany}
+                highestData={highestData}
+              />
+            </Grid>
+          ))}
+      </Grid>
     </>
   );
 };

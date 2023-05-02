@@ -4,3 +4,8 @@ export interface IAlert {
   message?: string;
   type?: AlertColor;
 }
+
+export interface IHighestData {
+  revenue?: number;
+  profit?: number;
+}

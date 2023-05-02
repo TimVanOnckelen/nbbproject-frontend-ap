@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Configuration, EnterpriseApi } from './generated';
+import { Configuration, EnterpriseApi } from './';
 import { AuthenticationApi } from './api';
 
 const axiosInstance = axios.create({

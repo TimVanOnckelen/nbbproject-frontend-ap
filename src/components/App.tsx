@@ -15,25 +15,22 @@ import { AxiosRequestConfig } from 'axios';
 // Via het Outlet component wordt dan een ander component ingeladen.
 // Zie router.tsx
 function App() {
+  const localToken = sessionStorage.getItem('token');
   const [api] = React.useState<IBackendAPI>(BackendApi);
-  const [token, setToken] = React.useState<string>();
+  const [token, setToken] = React.useState<string | null>(localToken);
   const [callConfig, setCallConfig] = React.useState<AxiosRequestConfig>();
 
   useEffect(() => {
     if (token) {
-      localStorage.setItem('token', token);
+      sessionStorage.setItem('token', token);
       setCallConfig({
         headers: { Authorization: `Bearer ${token}` },
       });
     } else {
-      localStorage.removeItem('token');
+      sessionStorage.removeItem('token');
       setCallConfig({});
     }
   }, [token]);
-
-  useEffect(() => {
-    document.title = 'NBB vergelijker';
-  });
 
   return (
     <Container

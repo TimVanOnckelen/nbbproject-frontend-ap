@@ -33,7 +33,7 @@ export const Login = () => {
           const response = await api.auth.apiAuthenticationPost({ userName: username, password: password });
           if (response.status === 200 && response.data.tokenId) {
             setToken(response.data?.tokenId);
-            navigate('/history');
+            navigate('../../compare');
           } else {
             setHasError(true);
           }

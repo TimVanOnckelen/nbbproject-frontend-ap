@@ -21,7 +21,7 @@ const HistoryOverview = () => {
 
   const [enterprises, setEnterprises] = React.useState<Enterprise[]>([]);
   const [filteredEnterprises, setFilteredEnterprises] = React.useState<Enterprise[]>([]);
-  const [isLoading, setLoading] = React.useState<boolean>(false);
+  const [isLoading, setLoading] = React.useState<boolean>(true);
   const [hasError, setHasError] = React.useState<IAlert>({ hasError: false });
 
   const [filterCompany, setFilterCompany] = useState<string>('');
@@ -77,7 +77,7 @@ const HistoryOverview = () => {
     <>
       {isLoading && <CircularProgress />}
       {hasError.hasError && <Alert severity='error'>{hasError.message}</Alert>}
-      {filteredEnterprises.length === 0 && <Alert>No history found</Alert>}
+      {filteredEnterprises.length === 0 && !isLoading && <Alert>No history found</Alert>}
       <TextField
         id='filterCompans'
         label='Filter by name or VAT'

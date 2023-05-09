@@ -1,14 +1,17 @@
 import * as React from 'react';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 import { IAppContext } from '../../models';
-import { Button, TextField, Grid, Box, Alert } from '@mui/material';
+import { Button, TextField, Grid, Box, Alert, CircularProgress } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 export const Login = () => {
   const { setToken, api } = useOutletContext<IAppContext>();
   const [username, setUser] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
   const [hasError, setHasError] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
+  const { t } = useTranslation();
   const changePassword = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setPassword(e.currentTarget.value);
@@ -22,29 +25,29 @@ export const Login = () => {
     [setUser]
   );
 
-  const navigate = useNavigate();
-
   const handleLogin = React.useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       const doLogin = async () => {
         e.preventDefault();
         setHasError(false);
+        setIsLoading(true);
         try {
           const response = await api.auth.apiAuthenticationPost({ userName: username, password: password });
           if (response.status === 200 && response.data.tokenId) {
             setToken(response.data?.tokenId);
-            navigate('../../compare');
           } else {
             setHasError(true);
           }
         } catch (e) {
           setHasError(true);
           console.log(e);
+        } finally {
+          setIsLoading(false);
         }
       };
       doLogin().catch((e) => console.log(e));
     },
-    [api, password, username, setToken, navigate, setHasError]
+    [api, password, username, setToken, setHasError]
   );
 
   return (
@@ -57,8 +60,10 @@ export const Login = () => {
           alignItems: 'center',
         }}
       >
-        {hasError && <Alert severity='error'>Username and password do not match. Please try again.</Alert>}
-        <h2>Login</h2>
+        {hasError && <Alert severity='error'>{t('auth.nomatch')}</Alert>}
+        <h2>{t('auth.login')}</h2>
+
+        {isLoading && <CircularProgress />}
 
         <Grid
           container
@@ -74,8 +79,8 @@ export const Login = () => {
                 <TextField
                   type='text'
                   name='username'
-                  label='Username'
-                  placeholder='username'
+                  label={t('auth.username')}
+                  placeholder={t('auth.username')!}
                   onChange={changeUser}
                   sx={{ m: 1 }}
                 />
@@ -86,15 +91,15 @@ export const Login = () => {
                 <TextField
                   type='password'
                   name='password'
-                  label='Password'
-                  placeholder='password'
+                  label={t('auth.password')}
+                  placeholder={t('auth.password')!}
                   onChange={changePassword}
                 />
               </>
             </Grid>
             <Grid>
               {' '}
-              <Button type='submit'>Login</Button>
+              <Button type='submit'>{t('auth.login')}</Button>
             </Grid>
           </form>
         </Grid>

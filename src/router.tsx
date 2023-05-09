@@ -8,8 +8,9 @@ import Login from './components/auth/login';
 import ApiTester from './components/general/apiTester';
 import Overview from './components/history/overview';
 import Compare from './components/company/compare';
-import ProtectedRoute from './components/auth/authHandler';
+import { ProtectedRoute, UnProtectedRoute } from './components/auth/authHandler';
 import Logout from './components/auth/logout';
+import SignUp from './components/auth/signUp';
 
 // React Router
 // Welke onderdelen moeten ingeladen worden als een gebruiker een bepaald pad kiest.
@@ -24,12 +25,26 @@ export const router = createBrowserRouter([
         path: 'auth',
         children: [
           {
-            path: 'login',
-            element: <Login />,
+            element: <UnProtectedRoute />,
+            children: [
+              {
+                path: 'login',
+                element: <Login />,
+              },
+              {
+                path: 'signup',
+                element: <SignUp />,
+              },
+            ],
           },
           {
-            path: 'logout',
-            element: <Logout />,
+            element: <ProtectedRoute />,
+            children: [
+              {
+                path: 'logout',
+                element: <Logout />,
+              },
+            ],
           },
         ],
       },
@@ -37,7 +52,7 @@ export const router = createBrowserRouter([
         element: <ProtectedRoute />,
         children: [
           { path: '', element: <Compare /> },
-          { path: 'compare', element: <Compare /> },
+          { path: 'compare/:enterprise?', element: <Compare /> },
           {
             path: 'search',
             element: <Search />,

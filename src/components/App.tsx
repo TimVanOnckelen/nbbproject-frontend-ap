@@ -10,11 +10,12 @@ import { Container, Card, CardContent } from '@mui/material';
 import Header from './general/header';
 import { BackendApi, IBackendAPI } from '../services/api';
 import { AxiosRequestConfig } from 'axios';
+import LangChanger from './general/langChanger';
 
 interface IJWTToken {
-  exp: 1683050022;
-  iss: 'http://localhost:42070';
-  aud: 'http://localhost:42070';
+  exp: number;
+  iss: string;
+  aud: string;
 }
 
 // Het App onderdeel wordt altijd ingeladen. Daarin zit altijd het Header component.
@@ -60,6 +61,7 @@ function App() {
       maxWidth='xl'
       className='app text-centered'
     >
+      <LangChanger />
       <Header token={token} />
       <Card sx={{ mt: 2, pt: 2 }}>
         <CardContent>

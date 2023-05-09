@@ -11,3 +11,47 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.nbb-color {
+  color: #27487B
+}
+
+.nbb-lang-changer {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  background-color: #fefefe;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+.nbb-lang-changer {
+  right: 5px;
+  top: 5px;
+}
+}
+
+.nbb-lang-changer span {
+  position: relative;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.nbb-color-changer span:hover{
+  background-color: gray;
+}
+
+.nbb-lang-changer span.selected {
+  font-weight: bold;
+}
+
+.nbb-second-color {
+  color: #A7A7A5
+}
+.nbb-light-text {
+  font-weight: 100;
+}
+.nbb-upper-text {
+    text-transform: uppercase;
+}

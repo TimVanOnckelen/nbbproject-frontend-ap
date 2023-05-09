@@ -11,10 +11,11 @@ import Paper from '@mui/material/Paper';
 
 // React components
 import { useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { IAlert, IAppContext } from '../../models';
 import { Enterprise } from '../../services/api';
 import { Alert, CircularProgress, TextField } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const HistoryOverview = () => {
   const { callConfig, api } = useOutletContext<IAppContext>();
@@ -22,9 +23,11 @@ const HistoryOverview = () => {
   const [enterprises, setEnterprises] = React.useState<Enterprise[]>([]);
   const [filteredEnterprises, setFilteredEnterprises] = React.useState<Enterprise[]>([]);
   const [isLoading, setLoading] = React.useState<boolean>(true);
-  const [hasError, setHasError] = React.useState<IAlert>({ hasError: false });
+  const [hasError, setHasError] = React.useState<IAlert>({ hasError: false, message: '' });
 
   const [filterCompany, setFilterCompany] = useState<string>('');
+
+  const { t } = useTranslation();
 
   React.useEffect(() => {
     const getEnterprises = async () => {
@@ -36,7 +39,7 @@ const HistoryOverview = () => {
           setEnterprises(response.data);
         }
       } catch (e) {
-        setHasError({ hasError: true, message: 'Something went wrong. Please try again.' });
+        setHasError({ hasError: true, message: t('errors.generic') });
         console.log(e);
       } finally {
         setLoading(false);
@@ -45,7 +48,7 @@ const HistoryOverview = () => {
     if (callConfig) {
       getEnterprises().catch();
     }
-  }, [callConfig, api.enterprise]);
+  }, [callConfig, api.enterprise, t]);
 
   const updateCompanyFilter = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,14 +78,15 @@ const HistoryOverview = () => {
 
   return (
     <>
-      {isLoading && <CircularProgress />}
       {hasError.hasError && <Alert severity='error'>{hasError.message}</Alert>}
-      {filteredEnterprises.length === 0 && !isLoading && <Alert>No history found</Alert>}
+      {filteredEnterprises.length === 0 && !isLoading && <Alert>{t('history.nohistoryfound')}</Alert>}
       <TextField
         id='filterCompans'
-        label='Filter by name or VAT'
+        label={t('history.filter')}
         onChange={updateCompanyFilter}
       />
+      {isLoading && <CircularProgress />}
+
       <TableContainer component={Paper}>
         <Table
           sx={{ minWidth: 650 }}
@@ -91,10 +95,10 @@ const HistoryOverview = () => {
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
-              <TableCell align='right'>VAT Number</TableCell>
-              <TableCell align='right'>Profit</TableCell>
-              <TableCell align='right'>Revenue</TableCell>
-              <TableCell align='right'>Year </TableCell>
+              <TableCell align='right'>{t('common.vat')}</TableCell>
+              <TableCell align='right'>{t('common.profit')}</TableCell>
+              <TableCell align='right'>{t('common.revenue')}</TableCell>
+              <TableCell align='right'>{t('common.year')} </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -110,7 +114,9 @@ const HistoryOverview = () => {
                   {enterprise.enterpriseName}
                 </TableCell>
 
-                <TableCell align='right'>{enterprise.enterpriseNumber}</TableCell>
+                <TableCell align='right'>
+                  <Link to={'/compare/' + enterprise.enterpriseNumber}>{enterprise.enterpriseNumber}</Link>
+                </TableCell>
                 <TableCell align='right'>{enterprise.financialData?.profit}</TableCell>
                 <TableCell align='right'>{enterprise.financialData?.revenue}</TableCell>
                 <TableCell align='right'>{enterprise.financialData?.year}</TableCell>

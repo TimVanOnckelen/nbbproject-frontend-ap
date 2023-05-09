@@ -6,6 +6,7 @@ import { router } from './router';
 
 // Visuele onderdelen
 import './index.css';
+// Localizatie
 import './localization';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);

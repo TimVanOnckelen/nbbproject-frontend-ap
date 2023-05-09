@@ -11,7 +11,7 @@ import Paper from '@mui/material/Paper';
 
 // React components
 import { useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { IAlert, IAppContext } from '../../models';
 import { Enterprise } from '../../services/api';
 import { Alert, CircularProgress, TextField } from '@mui/material';
@@ -94,8 +94,8 @@ const HistoryOverview = () => {
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
-              <TableCell align='right'>{t('commin.vat')}</TableCell>
-              <TableCell align='right'>{t('commin.profit')}</TableCell>
+              <TableCell align='right'>{t('common.vat')}</TableCell>
+              <TableCell align='right'>{t('common.profit')}</TableCell>
               <TableCell align='right'>{t('common.revenue')}</TableCell>
               <TableCell align='right'>{t('common.year')} </TableCell>
             </TableRow>
@@ -113,7 +113,9 @@ const HistoryOverview = () => {
                   {enterprise.enterpriseName}
                 </TableCell>
 
-                <TableCell align='right'>{enterprise.enterpriseNumber}</TableCell>
+                <TableCell align='right'>
+                  <Link to={'/compare/' + enterprise.enterpriseNumber}>{enterprise.enterpriseNumber}</Link>
+                </TableCell>
                 <TableCell align='right'>{enterprise.financialData?.profit}</TableCell>
                 <TableCell align='right'>{enterprise.financialData?.revenue}</TableCell>
                 <TableCell align='right'>{enterprise.financialData?.year}</TableCell>

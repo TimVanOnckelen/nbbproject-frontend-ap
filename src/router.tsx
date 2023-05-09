@@ -37,7 +37,7 @@ export const router = createBrowserRouter([
         element: <ProtectedRoute />,
         children: [
           { path: '', element: <Compare /> },
-          { path: 'compare', element: <Compare /> },
+          { path: 'compare/:enterprise?', element: <Compare /> },
           {
             path: 'search',
             element: <Search />,

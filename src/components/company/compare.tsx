@@ -1,6 +1,6 @@
 // React
 import React from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 
 // Visuele onderdelen
 import { Button, TextField, Grid, Alert, Box, CircularProgress } from '@mui/material';
@@ -27,6 +27,13 @@ const Compare = () => {
   const [hasError, setHasError] = React.useState<IAlert>({ hasError: false, message: '' });
 
   const { t } = useTranslation();
+  const { enterprise } = useParams();
+
+  React.useEffect(() => {
+    if (enterprise) {
+      setCompany1(enterprise);
+    }
+  }, [enterprise]);
 
   const updateCompany = React.useCallback(
     (companyNumber: number) => (e: React.ChangeEvent<HTMLInputElement>) => {

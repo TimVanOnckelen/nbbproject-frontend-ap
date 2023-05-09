@@ -1,15 +1,14 @@
 // React
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { RouterProvider } from "react-router-dom";
-import { router } from "./router";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router';
 
 // Visuele onderdelen
-import "./index.css";
+import './index.css';
+import './localization';
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 // Start van de applicatie
 // Router laadt de nodige components vanuit router.tsx
 root.render(

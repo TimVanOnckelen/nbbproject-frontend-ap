@@ -1,0 +1,33 @@
+{
+    "common": {
+        "national": "nationale",
+        "bank": "bank",
+        "comparator": "vergelijker",
+        "company": "Bedrijf",
+        "compare": "Vergelijk",
+        "history": "Geschiedenis",
+        "vat": "BTW nummer",
+        "profit": "Winst",
+        "revenue": "Omzet",
+        "year": "Jaar"
+    },
+    "auth": {
+        "login": "Aanmelden",
+        "logout": "Afmelden",
+        "myprofile": "Mijn Profiel",
+        "username": "Gebruikersnaam",
+        "password": "Wachtwoord",
+        "nomatch": "Wachtwoord en gebruikersnaam komen niet overeen. Probeer opnieuw."
+    },
+    "errors": {
+        "generic": "Er ging iets mis, probeer opnieuw.",
+        "validVat": "Gelieve valide BTW nummers in te voegen.",
+        "companyNotExsists": "1 of beide BTW nummer lijken niet te bestaan in de database. Probeer opnieuw."
+    },
+    "compare": {
+        "inputVat": "Voer 2 BTW nummers in om financieele data te vergelijken."
+    },
+    "history": {
+        "filter": "Filter op naam of BTW nummer."
+    }
+}

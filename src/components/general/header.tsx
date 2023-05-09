@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 // Visuele onderdelen
 import { BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 /**
  * https://mui.com/material-ui/api/bottom-navigation-action/
  * More info about button actions can be found above
@@ -23,6 +24,8 @@ const Header = (props: IHeaderProps) => {
    */
   const navigate = useNavigate();
 
+  const { t } = useTranslation();
+
   /**
    * Change current page based on value
    */
@@ -36,7 +39,10 @@ const Header = (props: IHeaderProps) => {
   return (
     <div>
       <Box>
-        <h1 className='MuiTypography-h1'>National bank comparator</h1>
+        <h1 className='MuiTypography-h1 nbb-color'>
+          <span className='nbb-second-color'>{t('common.national')}</span> <span className='nbb-light-text nbb-text-upper'> {t('common.bank')}</span>
+          <span className='nbb-second-color nbb-light-text'>{t('common.comparator')}</span>
+        </h1>
       </Box>
       <BottomNavigation
         showLabels
@@ -45,31 +51,31 @@ const Header = (props: IHeaderProps) => {
       >
         {token && (
           <BottomNavigationAction
-            label='Compare'
+            label={t('common.compare')}
             value='/'
           />
         )}
         {token && (
           <BottomNavigationAction
-            label='History'
+            label={t('common.history')}
             value='/history'
           />
         )}
         {token && (
           <BottomNavigationAction
-            label='My Profile'
+            label={t('auth.myprofile')}
             value='/profile'
           />
         )}
         {token && (
           <BottomNavigationAction
-            label='Log out'
+            label={t('auth.logout')}
             value='auth/logout'
           />
         )}
         {!token && (
           <BottomNavigationAction
-            label='Login'
+            label={t('auth.login')}
             value='/auth/login'
           />
         )}

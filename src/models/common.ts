@@ -1,7 +1,7 @@
 import { AlertColor } from '@mui/material';
 export interface IAlert {
   hasError: boolean;
-  message?: string;
+  message: string;
   type?: AlertColor;
 }
 

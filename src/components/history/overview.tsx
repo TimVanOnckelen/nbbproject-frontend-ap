@@ -15,6 +15,7 @@ import { useOutletContext } from 'react-router-dom';
 import { IAlert, IAppContext } from '../../models';
 import { Enterprise } from '../../services/api';
 import { Alert, CircularProgress, TextField } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const HistoryOverview = () => {
   const { callConfig, api } = useOutletContext<IAppContext>();
@@ -22,9 +23,11 @@ const HistoryOverview = () => {
   const [enterprises, setEnterprises] = React.useState<Enterprise[]>([]);
   const [filteredEnterprises, setFilteredEnterprises] = React.useState<Enterprise[]>([]);
   const [isLoading, setLoading] = React.useState<boolean>(true);
-  const [hasError, setHasError] = React.useState<IAlert>({ hasError: false });
+  const [hasError, setHasError] = React.useState<IAlert>({ hasError: false, message: '' });
 
   const [filterCompany, setFilterCompany] = useState<string>('');
+
+  const { t } = useTranslation();
 
   React.useEffect(() => {
     const getEnterprises = async () => {
@@ -36,7 +39,7 @@ const HistoryOverview = () => {
           setEnterprises(response.data);
         }
       } catch (e) {
-        setHasError({ hasError: true, message: 'Something went wrong. Please try again.' });
+        setHasError({ hasError: true, message: t('errors.generic') });
         console.log(e);
       } finally {
         setLoading(false);
@@ -45,7 +48,7 @@ const HistoryOverview = () => {
     if (callConfig) {
       getEnterprises().catch();
     }
-  }, [callConfig, api.enterprise]);
+  }, [callConfig, api.enterprise, t]);
 
   const updateCompanyFilter = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,7 +83,7 @@ const HistoryOverview = () => {
       {filteredEnterprises.length === 0 && !isLoading && <Alert>No history found</Alert>}
       <TextField
         id='filterCompans'
-        label='Filter by name or VAT'
+        label={t('history.filter')}
         onChange={updateCompanyFilter}
       />
       <TableContainer component={Paper}>
@@ -91,10 +94,10 @@ const HistoryOverview = () => {
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
-              <TableCell align='right'>VAT Number</TableCell>
-              <TableCell align='right'>Profit</TableCell>
-              <TableCell align='right'>Revenue</TableCell>
-              <TableCell align='right'>Year </TableCell>
+              <TableCell align='right'>{t('commin.vat')}</TableCell>
+              <TableCell align='right'>{t('commin.profit')}</TableCell>
+              <TableCell align='right'>{t('common.revenue')}</TableCell>
+              <TableCell align='right'>{t('common.year')} </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

@@ -1,0 +1,33 @@
+{
+    "common": {
+        "national": "national",
+        "bank": "bank",
+        "comparator": "comparator",
+        "company": "Company",
+        "compare": "Compare",
+        "history": "History",
+        "vat": "VAT Number",
+        "profit": "Profit",
+        "revenue": "Revenue",
+        "year": "Year"
+    },
+    "auth": {
+        "login": "Log In",
+        "logout": "Log out",
+        "myprofile": "My profile",
+        "username": "Username",
+        "password": "Password",
+        "nomatch": "Username and password do not match. Please try again"
+    },
+    "errors": {
+        "generic": "Something went wrong. Please try again.",
+        "validVat": "Please enter valid VAT numbers.",
+        "companyNotExsists": "'Seems like one or both of the companys does not exsist in the database. Please try again.'"
+    },
+    "compare": {
+        "inputVat": "Input 2 VAT numbers to compare there financial data."
+    },
+    "history": {
+        "filter": "Filter by name or VAT"
+    }
+}

@@ -3,34 +3,63 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert/Alert';
+import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useOutletContext } from 'react-router-dom';
 import { IAppContext } from '../../models';
+import { useTranslation } from 'react-i18next';
 
 export default function SignUp() {
   const { setToken, api } = useOutletContext<IAppContext>();
+  const [hasError, setHasError] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+  const { t } = useTranslation();
 
-    try {
-      const response = await api.user.apiUserPost({
-        userName: data.get('username')?.toString()!,
-        password: data.get('password')?.toString()!,
-        firstName: data.get('firstName')?.toString()!,
-        lastName: data.get('lastName')?.toString()!,
-      });
-      console.log(response);
-    } catch (e) {}
-  };
+  const handleSubmit = React.useCallback(
+    async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+
+      try {
+        setIsLoading(true);
+        setHasError(false);
+        const response = await api.user.apiUserPost({
+          userName: data.get('username')?.toString()!,
+          password: data.get('password')?.toString()!,
+          firstName: data.get('firstName')?.toString()!,
+          lastName: data.get('lastName')?.toString()!,
+        });
+        if (response.status === 200) {
+          const loginresponse = await api.auth.apiAuthenticationPost({
+            userName: data.get('username')?.toString()!,
+            password: data.get('password')?.toString()!,
+          });
+
+          if (loginresponse.data?.tokenId) {
+            setToken(loginresponse.data.tokenId);
+          }
+        }
+      } catch (e) {
+        setHasError(true);
+        console.log(e);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [api, setIsLoading, setToken]
+  );
 
   return (
     <Container
       component='main'
       maxWidth='xs'
     >
+      {hasError && <Alert severity='error'>{t('errors.generic')}</Alert>}
+      {isLoading && <CircularProgress />}
+
       <Box
         sx={{
           display: 'flex',

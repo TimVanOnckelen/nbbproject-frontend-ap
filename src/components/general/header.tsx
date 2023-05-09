@@ -79,6 +79,12 @@ const Header = (props: IHeaderProps) => {
             value='/auth/login'
           />
         )}
+        {!token && (
+          <BottomNavigationAction
+            label={t('auth.signup')}
+            value='/auth/signup'
+          />
+        )}
       </BottomNavigation>
     </div>
   );

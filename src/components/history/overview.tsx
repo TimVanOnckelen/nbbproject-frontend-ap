@@ -78,14 +78,15 @@ const HistoryOverview = () => {
 
   return (
     <>
-      {isLoading && <CircularProgress />}
       {hasError.hasError && <Alert severity='error'>{hasError.message}</Alert>}
-      {filteredEnterprises.length === 0 && !isLoading && <Alert>No history found</Alert>}
+      {filteredEnterprises.length === 0 && !isLoading && <Alert>{t('history.nohistoryfound')}</Alert>}
       <TextField
         id='filterCompans'
         label={t('history.filter')}
         onChange={updateCompanyFilter}
       />
+      {isLoading && <CircularProgress />}
+
       <TableContainer component={Paper}>
         <Table
           sx={{ minWidth: 650 }}

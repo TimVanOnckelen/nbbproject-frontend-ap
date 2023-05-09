@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Navigate, Outlet, useOutletContext } from 'react-router-dom';
 import { IAppContext } from '../../models';
 
-const ProtectedRoute = () => {
+export const ProtectedRoute = () => {
   const context = useOutletContext<IAppContext>();
 
   if (!context.token) {
@@ -16,4 +16,18 @@ const ProtectedRoute = () => {
 
   return <Outlet context={context} />;
 };
-export default ProtectedRoute;
+
+export const UnProtectedRoute = () => {
+  const context = useOutletContext<IAppContext>();
+
+  if (context.token) {
+    return (
+      <Navigate
+        to='/compare'
+        replace
+      />
+    );
+  }
+
+  return <Outlet context={context} />;
+};

@@ -54,12 +54,14 @@ const Compare = () => {
         setCompanysFinancialData([]);
         setIsLoading(true);
         if (!company1 || !company2) {
-          setHasError({ hasError: true, message: t('errors.validVAT'), type: 'error' });
+          setHasError({ hasError: true, message: t('errors.validVat'), type: 'error' });
           return;
         }
         const response = await api.enterprise.apiEnterprisePost({ enterpriseNumbers: [company1, company2] }, callConfig);
         if (response.status === 200 && response.data.length > 1) {
           setCompanysFinancialData(response.data as Enterprise[]);
+        } else {
+          setHasError({ hasError: true, message: t('errors.companyNotExsists') });
         }
       } catch (e) {
         console.log(e);

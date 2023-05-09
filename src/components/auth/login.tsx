@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 import { IAppContext } from '../../models';
 import { Button, TextField, Grid, Box, Alert, CircularProgress } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -25,8 +25,6 @@ export const Login = () => {
     [setUser]
   );
 
-  const navigate = useNavigate();
-
   const handleLogin = React.useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       const doLogin = async () => {
@@ -37,7 +35,6 @@ export const Login = () => {
           const response = await api.auth.apiAuthenticationPost({ userName: username, password: password });
           if (response.status === 200 && response.data.tokenId) {
             setToken(response.data?.tokenId);
-            navigate('../../compare');
           } else {
             setHasError(true);
           }
@@ -50,7 +47,7 @@ export const Login = () => {
       };
       doLogin().catch((e) => console.log(e));
     },
-    [api, password, username, setToken, navigate, setHasError]
+    [api, password, username, setToken, setHasError]
   );
 
   return (

@@ -8,7 +8,7 @@ import Login from './components/auth/login';
 import ApiTester from './components/general/apiTester';
 import Overview from './components/history/overview';
 import Compare from './components/company/compare';
-import ProtectedRoute from './components/auth/authHandler';
+import { ProtectedRoute, UnProtectedRoute } from './components/auth/authHandler';
 import Logout from './components/auth/logout';
 import SignUp from './components/auth/signUp';
 
@@ -25,16 +25,26 @@ export const router = createBrowserRouter([
         path: 'auth',
         children: [
           {
-            path: 'login',
-            element: <Login />,
+            element: <UnProtectedRoute />,
+            children: [
+              {
+                path: 'login',
+                element: <Login />,
+              },
+              {
+                path: 'signup',
+                element: <SignUp />,
+              },
+            ],
           },
           {
-            path: 'signup',
-            element: <SignUp />,
-          },
-          {
-            path: 'logout',
-            element: <Logout />,
+            element: <ProtectedRoute />,
+            children: [
+              {
+                path: 'logout',
+                element: <Logout />,
+              },
+            ],
           },
         ],
       },

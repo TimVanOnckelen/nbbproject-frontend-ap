@@ -10,6 +10,7 @@ import Overview from './components/history/overview';
 import Compare from './components/company/compare';
 import ProtectedRoute from './components/auth/authHandler';
 import Logout from './components/auth/logout';
+import Profile from './components/profile/profile';
 
 // React Router
 // Welke onderdelen moeten ingeladen worden als een gebruiker een bepaald pad kiest.
@@ -52,7 +53,7 @@ export const router = createBrowserRouter([
           },
           {
             path: 'profile',
-            element: <Login />,
+            element: <Profile />,
           },
         ],
       },

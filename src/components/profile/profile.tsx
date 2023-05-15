@@ -1,5 +1,7 @@
 import React, { useState, ChangeEvent } from 'react';
 import { Image, Container, Row, Col } from 'react-bootstrap';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
 
 // const ImageUploadPreview: React.FC = () => {
 //   const [file, setFile] = useState<File | undefined>(undefined);
@@ -74,6 +76,43 @@ const InputFieldname =()=>{
 
 }
 
+const ProfileImageUpload: React.FC = () => {
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || null;
+    setSelectedImage(file);
+  };
+
+  const handleUpload = () => {
+    if (selectedImage) {
+      const formData = new FormData();
+      formData.append('image', selectedImage);
+
+      fetch('http://localhost:3000/upload', {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Handle the response data as needed
+          console.log('Upload successful:', data);
+        })
+        .catch(error => {
+          // Handle any errors that occurred during the upload
+          console.error('Error during upload:', error);
+        });
+    }
+  };
+
+  return (
+    <div>
+      <input type="file" accept="image/*" onChange={handleImageChange} />
+      <button onClick={handleUpload}>Upload</button>
+    </div>
+  );
+};
+
 
 
  const Profile =()=> {
@@ -81,6 +120,7 @@ const InputFieldname =()=>{
     return(
         <>
         {/* <ImageUploadPreview/> */}
+        <ProfileImageUpload/>
         <InputFieldname/>
         
         </>

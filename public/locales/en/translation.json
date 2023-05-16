@@ -17,6 +17,8 @@
         "myprofile": "My profile",
         "username": "Username",
         "password": "Password",
+        "register": "Register",
+        "signup":"Register",
         "nomatch": "Username and password do not match. Please try again"
     },
     "errors": {

@@ -17,6 +17,7 @@
         "myprofile": "Mijn Profiel",
         "username": "Gebruikersnaam",
         "password": "Wachtwoord",
+        "signup": "Registreren",
         "nomatch": "Wachtwoord en gebruikersnaam komen niet overeen. Probeer opnieuw."
     },
     "errors": {
@@ -28,6 +29,7 @@
         "inputVat": "Voer 2 BTW nummers in om financieele data te vergelijken."
     },
     "history": {
-        "filter": "Filter op naam of BTW nummer."
+        "filter": "Filter op naam of BTW nummer.",
+        "historynotfound":"Er werden geen opzoekingen gevonden."
     }
 }

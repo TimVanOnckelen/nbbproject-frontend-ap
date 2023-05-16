@@ -2,7 +2,8 @@ import React, { useState, ChangeEvent } from 'react';
 import { Image, Container, Row, Col } from 'react-bootstrap';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
-
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 // const ImageUploadPreview: React.FC = () => {
 //   const [file, setFile] = useState<File | undefined>(undefined);
 //   const [imagePreviewUrl, setImagePreviewUrl] = useState<string>('');
@@ -50,31 +51,51 @@ import Stack from '@mui/material/Stack';
 //   );
 // };
 
-const InputFieldname =()=>{
-    return(
+// const InputFieldname =()=>{
+//     return(
 
-        <>
-        <fieldset style={{ color: 'blue', lineHeight : 10, padding: 20 }}>
+//         <>
+//         <fieldset style={{ color: 'blue', lineHeight : 2, padding: 10, display: 'flex', flexDirection:'column', flexWrap:'wrap', justifyContent:'flex-start' }}>
             
+            
+//             <label  htmlFor="">naam </label>
+//             <input  type="text" name="" id="" /> 
+//             <label htmlFor="">voornaam </label>
+//             <input type="text" name="" id="" /> 
+//             <label htmlFor="">NBB-identifier </label>
+//             <input type="text" name="" id="" /> 
+//             <label htmlFor="">Telefoon </label>
+//             <input type="text" name="" id="" />
+//             <label htmlFor="">Geboorte </label>
+//             <input type="text" name="" id="" />
+//         </fieldset>
+       
+        
+//         </>
+//     )
 
-            <label  htmlFor="">naam </label>
-            <input  type="text" name="" id="" /> <br />
-            <label htmlFor="">voornaam </label>
-            <input type="text" name="" id="" /> <br />
-            <label htmlFor="">NBB-identifier </label>
-            <input type="text" name="" id="" /> <br />
-            <label htmlFor="">Telefoon </label>
-            <input type="text" name="" id="" /><br />
-            <label htmlFor="">Geboorte </label>
-            <input type="text" name="" id="" />
-        </fieldset>
+
+// }
+const ColorTextFields=()=> {
+    return (
+      <Box style={{ color: 'blue', lineHeight : 2, padding: 10, display: 'flex', flexDirection:'column', flexWrap:'wrap', justifyContent:'flex-start' }}
+        component="form"
+        sx={{
+          '& > :not(style)': { m: 1, width: '25ch' },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField label="Name" color="secondary" focused />
+        <TextField label="Surname" color="secondary" focused />
+        <TextField label="NBB-Number" color="secondary" focused />
+        <TextField label="BirthYear" color="secondary" focused />
         
         
-        </>
-    )
+      </Box>
+    );
+  }
 
-
-}
 
 const ProfileImageUpload: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -89,7 +110,7 @@ const ProfileImageUpload: React.FC = () => {
       const formData = new FormData();
       formData.append('image', selectedImage);
 
-      fetch('http://localhost:3000/upload', {
+      fetch('https://localhost:3000/profile', {
         method: 'POST',
         body: formData,
       })
@@ -107,11 +128,13 @@ const ProfileImageUpload: React.FC = () => {
 
   return (
     <div>
-      <input type="file" accept="image/*" onChange={handleImageChange} />
-      <button onClick={handleUpload}>Upload</button>
+      <input style={{display: 'flex', flexDirection:'column', flexWrap:'wrap', justifyContent:'flex-start' }} type="file" accept="image/*" onChange={handleImageChange} /> <br />
+      <button style={{display: 'flex', flexDirection:'column', flexWrap:'wrap', justifyContent:'flex-start' }} onClick={handleUpload}>Upload</button>
     </div>
   );
 };
+
+
 
 
 
@@ -121,7 +144,8 @@ const ProfileImageUpload: React.FC = () => {
         <>
         {/* <ImageUploadPreview/> */}
         <ProfileImageUpload/>
-        <InputFieldname/>
+        {/* <InputFieldname/> */}
+        <ColorTextFields/>
         
         </>
     )

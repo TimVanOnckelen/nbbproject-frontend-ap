@@ -17,6 +17,9 @@
 "myprofile": "Mon profil",
 "username": "Nom d'utilisateur",
 "password": "Mot de passe",
+"register": "Registere",
+        "signup":"Register",
+
 "nomatch": "Le mot de passe et le nom d'utilisateur ne correspondent pas. Veuillez réessayer."
 },
 "errors": {

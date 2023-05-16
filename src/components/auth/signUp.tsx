@@ -7,16 +7,19 @@ import Alert from '@mui/material/Alert/Alert';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { IAppContext } from '../../models';
 import { useTranslation } from 'react-i18next';
 
 export default function SignUp() {
   const { setToken, api } = useOutletContext<IAppContext>();
   const [hasError, setHasError] = React.useState<boolean>(false);
+  const [isSucces, setIsSucces] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const { t } = useTranslation();
+
+  const navigate = useNavigate();
 
   const handleSubmit = React.useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
@@ -26,13 +29,14 @@ export default function SignUp() {
       try {
         setIsLoading(true);
         setHasError(false);
+        setIsSucces(false);
         const response = await api.user.apiUserPost({
           userName: data.get('username')?.toString()!,
           password: data.get('password')?.toString()!,
           firstName: data.get('firstName')?.toString()!,
           lastName: data.get('lastName')?.toString()!,
         });
-        if (response.status === 200) {
+        if (response.status < 300) {
           const loginresponse = await api.auth.apiAuthenticationPost({
             userName: data.get('username')?.toString()!,
             password: data.get('password')?.toString()!,
@@ -40,6 +44,8 @@ export default function SignUp() {
 
           if (loginresponse.data?.tokenId) {
             setToken(loginresponse.data.tokenId);
+            setIsSucces(true);
+            navigate('/');
           }
         }
       } catch (e) {
@@ -49,7 +55,7 @@ export default function SignUp() {
         setIsLoading(false);
       }
     },
-    [api, setIsLoading, setToken]
+    [api, setIsLoading, setToken, setIsSucces, navigate]
   );
 
   return (
@@ -58,6 +64,8 @@ export default function SignUp() {
       maxWidth='xs'
     >
       {hasError && <Alert severity='error'>{t('errors.generic')}</Alert>}
+      {isSucces && <Alert severity='success'>{t('auth.succesfullyloging')}</Alert>}
+
       {isLoading && <CircularProgress />}
 
       <Box

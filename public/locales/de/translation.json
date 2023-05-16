@@ -17,6 +17,9 @@
         "myprofile": "Mein Profil",
         "username": "Benutzername",
         "password": "Passwort",
+        "register": "Register",
+                "signup":"Register",
+
         "nomatch": "Passwort und Benutzername stimmen nicht überein. Bitte versuchen Sie es erneut."
     },
     "errors": {

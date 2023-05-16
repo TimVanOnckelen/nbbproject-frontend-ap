@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { IAppContext } from '../../models';
-import { Button, TextField, Grid, Box, Alert, CircularProgress } from '@mui/material';
+import { Button, TextField, Grid, Box, Alert, CircularProgress, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 export const Login = () => {
@@ -61,7 +61,13 @@ export const Login = () => {
         }}
       >
         {hasError && <Alert severity='error'>{t('auth.nomatch')}</Alert>}
-        <h2>{t('auth.login')}</h2>
+
+        <Typography
+          component='h1'
+          variant='h5'
+        >
+          {t('auth.login')}
+        </Typography>
 
         {isLoading && <CircularProgress />}
 

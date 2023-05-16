@@ -1,8 +1,8 @@
 {
 "common": {
-"national": "nationale",
-"bank": "banque",
-"comparator": "comparateur",
+"national": "banque",
+"bank": "comparateur ",
+"comparator": "nationale",
 "company": "Entreprise",
 "compare": "Comparer",
 "history": "Histoire",

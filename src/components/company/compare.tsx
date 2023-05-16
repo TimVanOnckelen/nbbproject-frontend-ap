@@ -27,13 +27,16 @@ const Compare = () => {
   const [hasError, setHasError] = React.useState<IAlert>({ hasError: false, message: '' });
 
   const { t } = useTranslation();
-  const { enterprise } = useParams();
+  const { enterprise, enterprise2 } = useParams();
 
   React.useEffect(() => {
     if (enterprise) {
       setCompany1(enterprise);
     }
-  }, [enterprise]);
+    if (enterprise2) {
+      setCompany2(enterprise2);
+    }
+  }, [enterprise, enterprise2]);
 
   const updateCompany = React.useCallback(
     (companyNumber: number) => (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -64,7 +64,7 @@ const Header = (props: IHeaderProps) => {
         {token && (
           <BottomNavigationAction
             label={t('auth.myprofile')}
-            value='/profile'
+            value='/auth/profile'
           />
         )}
         {token && (

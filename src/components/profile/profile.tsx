@@ -1,101 +1,44 @@
 import React, { useState, ChangeEvent } from 'react';
-import { Image, Container, Row, Col } from 'react-bootstrap';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-// const ImageUploadPreview: React.FC = () => {
-//   const [file, setFile] = useState<File | undefined>(undefined);
-//   const [imagePreviewUrl, setImagePreviewUrl] = useState<string>('');
-
-//   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-//     e.preventDefault();
-
-//     let reader = new FileReader();
-//     let file = e.target.files?.[0];
-
-//     if (file) {
-//       reader.onloadend = () => {
-//         setFile(file);
-//         setImagePreviewUrl(reader.result as string);
-//       };
-
-//       reader.readAsDataURL(file);
-//     }
-//   };
-
-//   let $imagePreview: JSX.Element | null = null;
-//   if (imagePreviewUrl) {
-//     $imagePreview = <Image src={imagePreviewUrl} thumbnail />;
-//   } else {
-//     $imagePreview = (
-//       <div className="previewText">Please select an Image for Preview</div>
-//     );
-//   }
-
-//   return (
-//     <Container>
-//       <Row>
-//         <Col xs={12} md={12}>
-//           <form>
-//             <label>Please Select Image</label>
-//             <br />
-//             <input type="file" onChange={handleImageChange} />
-//           </form>
-//         </Col>
-//         <Col xs={12} md={12}>
-//           {$imagePreview}
-//         </Col>
-//       </Row>
-//     </Container>
-//   );
-// };
-
-// const InputFieldname =()=>{
-//     return(
-
-//         <>
-//         <fieldset style={{ color: 'blue', lineHeight : 2, padding: 10, display: 'flex', flexDirection:'column', flexWrap:'wrap', justifyContent:'flex-start' }}>
-            
-            
-//             <label  htmlFor="">naam </label>
-//             <input  type="text" name="" id="" /> 
-//             <label htmlFor="">voornaam </label>
-//             <input type="text" name="" id="" /> 
-//             <label htmlFor="">NBB-identifier </label>
-//             <input type="text" name="" id="" /> 
-//             <label htmlFor="">Telefoon </label>
-//             <input type="text" name="" id="" />
-//             <label htmlFor="">Geboorte </label>
-//             <input type="text" name="" id="" />
-//         </fieldset>
-       
-        
-//         </>
-//     )
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Card, CardMedia } from '@mui/material'
 
 
-// }
-const ColorTextFields=()=> {
+
+const TextFields=()=> {
     return (
-      <Box style={{ color: 'blue', lineHeight : 2, padding: 10, display: 'flex', flexDirection:'column', flexWrap:'wrap', justifyContent:'flex-start' }}
-        component="form"
-        sx={{
-          '& > :not(style)': { m: 1, width: '25ch' },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField label="Name" color="secondary" focused />
-        <TextField label="Surname" color="secondary" focused />
-        <TextField label="NBB-Number" color="secondary" focused />
-        <TextField label="BirthYear" color="secondary" focused />
-        
-        
-      </Box>
-    );
-  }
-
+        <Box style={{  display: 'flex', flexDirection:'column', flexWrap:'wrap', justifyContent:'flex-start', margin: 20 }}
+          component="form"
+          sx={{
+            '& > :not(style)': { m: 1, width: '25ch' },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField id="Naam" label="Naam" variant="outlined" /> <br />
+          <TextField id="Voornaam" label="Voornaam" variant="outlined" /><br />
+          <TextField id="Wachtwoord" label="Wachtwoord" variant="outlined" /><br />
+          <TextField id="Wachtwoord herhalen" label="Wachtwoord herhalen" variant="outlined" /> <br />
+          <TextField id="Email" label="Email" variant="outlined" /><br />   
+          <Stack spacing={5} direction="row">
+                <Button variant="text">SUBMIT</Button>
+                
+        </Stack>
+        </Box>
+      );
+}
 
 const ProfileImageUpload: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -127,12 +70,24 @@ const ProfileImageUpload: React.FC = () => {
   };
 
   return (
-    <div>
-      <input style={{display: 'flex', flexDirection:'column', flexWrap:'wrap', justifyContent:'flex-start' }} type="file" accept="image/*" onChange={handleImageChange} /> <br />
-      <button style={{display: 'flex', flexDirection:'column', flexWrap:'wrap', justifyContent:'flex-start' }} onClick={handleUpload}>Upload</button>
-    </div>
+    <>
+    
+      <input style={{display: 'flex', flexDirection:'column', flexWrap:'wrap', justifyContent:'flex-start', margin:20 }}
+       type="file" accept="image/*" onChange={handleImageChange} /> 
+       <Stack spacing={5} direction="row">
+                <Button style={{display: 'flex', flexDirection:'column', flexWrap:'wrap', justifyContent:'flex-start' , margin: 20 }} 
+                 variant="text" onClick={handleUpload} >UPLOAD Profielfoto</Button>     
+        </Stack>
+     
+    
+    </>
   );
 };
+
+
+
+
+
 
 
 
@@ -145,7 +100,7 @@ const ProfileImageUpload: React.FC = () => {
         {/* <ImageUploadPreview/> */}
         <ProfileImageUpload/>
         {/* <InputFieldname/> */}
-        <ColorTextFields/>
+        <TextFields/>
         
         </>
     )

@@ -45,6 +45,11 @@ export const router = createBrowserRouter([
                 path: 'logout',
                 element: <Logout />,
               },
+
+              {
+                path: 'profile',
+                element: <Profile />,
+              },
             ],
           },
         ],
@@ -65,11 +70,6 @@ export const router = createBrowserRouter([
           {
             path: 'history',
             element: <Overview />,
-          },
-
-          {
-            path: 'profile',
-            element: <Profile />,
           },
         ],
       },

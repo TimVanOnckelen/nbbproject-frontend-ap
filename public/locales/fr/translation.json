@@ -1,0 +1,36 @@
+{
+"common": {
+"national": "nationale",
+"bank": "banque",
+"comparator": "comparateur",
+"company": "Entreprise",
+"compare": "Comparer",
+"history": "Histoire",
+"vat": "Numéro de TVA",
+"profit": "Profit",
+"revenue": "Revenu",
+"year": "Année"
+},
+"auth": {
+"login": "Se connecter",
+"logout": "Se déconnecter",
+"myprofile": "Mon profil",
+"username": "Nom d'utilisateur",
+"password": "Mot de passe",
+"register": "Registere",
+        "signup":"Register",
+
+"nomatch": "Le mot de passe et le nom d'utilisateur ne correspondent pas. Veuillez réessayer."
+},
+"errors": {
+"generic": "Une erreur s'est produite. Veuillez réessayer.",
+"validVat": "Veuillez insérer des numéros de TVA valides.",
+"companyNotExsists": "Un ou les deux numéros de TVA semblent ne pas exister dans la base de données. Veuillez réessayer."
+},
+"compare": {
+"inputVat": "Entrez 2 numéros de TVA pour comparer les données financières."
+},
+"history": {
+"filter": "Filtrer par nom ou numéro de TVA."
+}
+}

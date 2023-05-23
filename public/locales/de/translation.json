@@ -1,0 +1,36 @@
+{
+    "common": {
+        "national": "national",
+        "bank": "Bank",
+        "comparator": "Vergleichsrechner",
+        "company": "Unternehmen",
+        "compare": "Vergleichen",
+        "history": "Geschichte",
+        "vat": "Mehrwertsteuernummer",
+        "profit": "Gewinn",
+        "revenue": "Umsatz",
+        "year": "Jahr"
+    },
+    "auth": {
+        "login": "Anmelden",
+        "logout": "Abmelden",
+        "myprofile": "Mein Profil",
+        "username": "Benutzername",
+        "password": "Passwort",
+        "register": "Register",
+                "signup":"Register",
+
+        "nomatch": "Passwort und Benutzername stimmen nicht überein. Bitte versuchen Sie es erneut."
+    },
+    "errors": {
+        "generic": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+        "validVat": "Bitte geben Sie gültige Mehrwertsteuernummern ein.",
+        "companyNotExsists": "Eine oder beide Mehrwertsteuernummern scheinen in der Datenbank nicht zu existieren. Bitte versuchen Sie es erneut."
+    },
+    "compare": {
+        "inputVat": "Geben Sie 2 Mehrwertsteuernummern ein, um finanzielle Daten zu vergleichen."
+    },
+    "history": {
+        "filter": "Filtern Sie nach Name oder Mehrwertsteuernummer."
+    }
+}

@@ -1,6 +1,6 @@
 // React
 import React from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 
 // Visuele onderdelen
 import { Button, TextField, Grid, Alert, Box, CircularProgress } from '@mui/material';
@@ -11,6 +11,7 @@ import Company from './company';
 // import { ICompareResult } from "../../models/company/company.model";
 import { Enterprise } from '../../services/api';
 import { IAlert, IAppContext, IHighestData } from '../../models';
+import { useTranslation } from 'react-i18next';
 
 // Vergelijkt twee bedrijven. Voorlopig worden de twee bedrijven nog fixed meegegeven.
 // Gaat verbinding maken met de backend API om gegevens in te lezen.
@@ -23,7 +24,16 @@ const Compare = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [highestData, setHighestData] = React.useState<IHighestData>({});
 
-  const [hasError, setHasError] = React.useState<IAlert>({ hasError: false });
+  const [hasError, setHasError] = React.useState<IAlert>({ hasError: false, message: '' });
+
+  const { t } = useTranslation();
+  const { enterprise } = useParams();
+
+  React.useEffect(() => {
+    if (enterprise) {
+      setCompany1(enterprise);
+    }
+  }, [enterprise]);
 
   const updateCompany = React.useCallback(
     (companyNumber: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,27 +50,29 @@ const Compare = () => {
   const getCompany = React.useCallback(() => {
     const loadCompanyData = async () => {
       try {
-        setHasError({ hasError: false });
+        setHasError({ hasError: false, message: '' });
         setCompanysFinancialData([]);
         setIsLoading(true);
         if (!company1 || !company2) {
-          setHasError({ hasError: true, message: 'Please enter valid VAT numbers.', type: 'error' });
+          setHasError({ hasError: true, message: t('errors.validVat'), type: 'error' });
           return;
         }
         const response = await api.enterprise.apiEnterprisePost({ enterpriseNumbers: [company1, company2] }, callConfig);
         if (response.status === 200 && response.data.length > 1) {
           setCompanysFinancialData(response.data as Enterprise[]);
+        } else {
+          setHasError({ hasError: true, message: t('errors.companyNotExsists') });
         }
       } catch (e) {
         console.log(e);
-        setHasError({ hasError: true, message: 'Seems like one or both of the companys does not exsist in the database. Please try again.' });
+        setHasError({ hasError: true, message: t('errors.companyNotExsists') });
       } finally {
         setIsLoading(false);
       }
     };
 
     loadCompanyData().then(() => {});
-  }, [company1, company2, api, callConfig]);
+  }, [company1, company2, api, callConfig, t]);
 
   React.useEffect(() => {
     if (companysFinancialData.length === 0) return;
@@ -87,25 +99,25 @@ const Compare = () => {
     <>
       {hasError.hasError && <Alert severity='error'>{hasError.message}</Alert>}
       <Box>
-        <p>Input 2 VAT numbers to compare there financial data.</p>
+        <p>{t('compare.inputVat')}</p>
       </Box>
       <Grid container>
         <Grid xs={5}>
           <TextField
             id='company1'
-            label='Company 1'
+            label={t('common.company') + ' 1'}
             variant='outlined'
             value={company1}
             onChange={updateCompany(1)}
           />
         </Grid>
         <Grid xs={2}>
-          <Button onClick={getCompany}>Compare</Button>
+          <Button onClick={getCompany}>{t('common.compare')}</Button>
         </Grid>
         <Grid xs={5}>
           <TextField
             id='company2'
-            label='Company 2'
+            label={t('common.company') + ' 2'}
             variant='outlined'
             value={company2}
             onChange={updateCompany(2)}

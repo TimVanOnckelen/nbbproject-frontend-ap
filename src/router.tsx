@@ -53,7 +53,7 @@ export const router = createBrowserRouter([
         element: <ProtectedRoute />,
         children: [
           { path: '', element: <Compare /> },
-          { path: 'compare/:enterprise?', element: <Compare /> },
+          { path: 'compare/:enterprise?/:enterprise2?', element: <Compare /> },
           {
             path: 'search',
             element: <Search />,
@@ -66,6 +66,7 @@ export const router = createBrowserRouter([
             path: 'history',
             element: <Overview />,
           },
+
           {
             path: 'profile',
             element: <Profile />,

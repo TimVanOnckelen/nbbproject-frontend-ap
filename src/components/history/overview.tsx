@@ -11,10 +11,10 @@ import Paper from '@mui/material/Paper';
 
 // React components
 import { useState } from 'react';
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import { IAlert, IAppContext } from '../../models';
 import { Enterprise } from '../../services/api';
-import { Alert, CircularProgress, TextField } from '@mui/material';
+import { Alert, CircularProgress, TextField, Checkbox } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const HistoryOverview = () => {
@@ -27,7 +27,11 @@ const HistoryOverview = () => {
 
   const [filterCompany, setFilterCompany] = useState<string>('');
 
+  const [selectedVats, setSelectedVats] = useState<string[]>([]);
+
   const { t } = useTranslation();
+
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const getEnterprises = async () => {
@@ -76,6 +80,25 @@ const HistoryOverview = () => {
     );
   }, [filterCompany, enterprises]);
 
+  const selectCheckbox = React.useCallback(
+    (e: React.FormEvent<HTMLInputElement>) => {
+      if (e.currentTarget.checked) {
+        const newArray = [...selectedVats, e.currentTarget.id];
+        setSelectedVats(newArray);
+      } else {
+        const filteredArray = selectedVats.filter((el) => el !== e.currentTarget.id);
+
+        setSelectedVats(filteredArray);
+      }
+    },
+    [selectedVats]
+  );
+
+  React.useEffect(() => {
+    if (selectedVats.length === 2) {
+      navigate(`/compare/${selectedVats[0]}/${selectedVats[1]}`);
+    }
+  }, [selectedVats, navigate]);
   return (
     <>
       {hasError.hasError && <Alert severity='error'>{hasError.message}</Alert>}
@@ -94,6 +117,7 @@ const HistoryOverview = () => {
         >
           <TableHead>
             <TableRow>
+              <TableCell>Compare</TableCell>
               <TableCell>Name</TableCell>
               <TableCell align='right'>{t('common.vat')}</TableCell>
               <TableCell align='right'>{t('common.profit')}</TableCell>
@@ -107,6 +131,12 @@ const HistoryOverview = () => {
                 key={enterprise.enterpriseNumber}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
+                <TableCell>
+                  <Checkbox
+                    id={enterprise.enterpriseNumber!}
+                    onChange={selectCheckbox}
+                  />
+                </TableCell>
                 <TableCell
                   component='th'
                   scope='row'

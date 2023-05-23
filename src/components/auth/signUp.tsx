@@ -79,7 +79,7 @@ export default function SignUp() {
           component='h1'
           variant='h5'
         >
-          Sign up
+          {t('auth.signup')}
         </Typography>
         <Box
           component='form'

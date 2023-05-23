@@ -10,6 +10,7 @@ import Overview from './components/history/overview';
 import Compare from './components/company/compare';
 import { ProtectedRoute, UnProtectedRoute } from './components/auth/authHandler';
 import Logout from './components/auth/logout';
+import Profile from './components/profile/profile';
 import SignUp from './components/auth/signUp';
 
 // React Router
@@ -64,6 +65,11 @@ export const router = createBrowserRouter([
           {
             path: 'history',
             element: <Overview />,
+          },
+
+          {
+            path: 'profile',
+            element: <Profile />,
           },
         ],
       },

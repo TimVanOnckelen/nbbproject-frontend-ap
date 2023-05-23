@@ -77,21 +77,10 @@ const ProfileImageUpload: React.FC = () => {
        <Stack spacing={5} direction="row">
                 <Button style={{display: 'flex', flexDirection:'column', flexWrap:'wrap', justifyContent:'flex-start' , margin: 20 }} 
                  variant="text" onClick={handleUpload} >UPLOAD Profielfoto</Button>     
-        </Stack>
-     
-    
-    </>
+        </Stack>    
+     </>
   );
 };
-
-
-
-
-
-
-
-
-
 
  const Profile =()=> {
 
